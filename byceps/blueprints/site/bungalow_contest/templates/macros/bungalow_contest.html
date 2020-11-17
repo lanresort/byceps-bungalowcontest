@@ -1,0 +1,32 @@
+{% from 'macros/user.html' import render_user_link %}
+
+
+{% macro render_contestant_description(contestant) -%}
+  <figure class="bungalow-contest-description">
+{{ contestant.description|bbcode|safe }}
+  </figure>
+{%- endmacro %}
+
+
+{% macro render_contestant_images(contestant) -%}
+  <ol class="bungalow-contest-images">
+    {%- for image in contestant.images %}
+    <li>
+      <figure class="framed">
+        <a href="{{ image.url_path }}" data-fslightbox><img src="{{ image.url_path }}"></a>
+        {%- if image.caption %}
+        <figcaption class="hyphenate">{{ image.caption }}</figcaption>
+        {%- endif %}
+      </figure>
+    </li>
+    {%- endfor %}
+  </ol>
+{%- endmacro %}
+
+
+{% macro render_contestant_occupants(occupants) -%}
+  {%- for occupant in occupants|sort(attribute='screen_name') %}
+  {%- if not loop.last %}{% if not loop.first %}, {% endif %}{% elif loop.length > 1 %} und {% endif %}
+    {{- render_user_link(occupant) -}}
+  {%- endfor %}
+{%- endmacro %}

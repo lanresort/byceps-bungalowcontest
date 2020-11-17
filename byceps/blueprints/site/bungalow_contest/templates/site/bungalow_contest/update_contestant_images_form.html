@@ -1,0 +1,47 @@
+{% extends 'layout/base.html' %}
+{% from 'macros/bungalow_contest.html' import render_contestant_images %}
+{% from 'macros/forms.html' import form_buttons, form_field, form_fieldset %}
+{% from 'macros/icons.html' import render_icon %}
+{% set title = 'Bungalow-Kandidatur-Bilder verwalten' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/bungalow/contest.css') }}">
+{% endblock %}
+
+{% block body %}
+  {%- set contestant_view_url = url_for('.view_contestant', id=contestant.id) %}
+
+  <nav class="breadcrumbs">
+    <ol>
+      <li><a href="{{ url_for('.index') }}">Bungalow-Contest</a></li>
+      <li><a href="{{ url_for('.contestants') }}">Kandidaten</a></li>
+      <li><a href="{{ contestant_view_url }}">Bungalow {{ contestant.bungalow_occupancy.bungalow.number }}</a></li>
+    </ol>
+  </nav>
+  <h1>{{ title }}</h1>
+
+  <h2>Bilder</h2>
+    {%- if contestant.images %}
+{{ render_contestant_images(contestant) }}
+    {%- else %}
+  <p class="dimmed">Du hast noch keine Bilder hochgeladen.</p>
+    {%- endif %}
+
+  <h2>Bild hochladen</h2>
+  <form action="{{ url_for('.create_contestant_image', id=contestant.id) }}" method="post" enctype="multipart/form-data">
+  {%- if not contestant.image_limit_reached %}
+    {%- call form_fieldset() %}
+      <small class="dimmed">
+        <p>Es können bis zu {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder hochgeladen werden.</p>
+      </small>
+      {{ form_field(form.image, maxlength=500000, accept='image/*', required='required') }}
+      {{ form_field(form.caption, maxlength=200, size=60, note='optional') }}
+    {%- endcall %}
+  {%- else %}
+    <p>Es wurden bereits {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder für diesen Bungalow hochgeladen. Das muss genügen :)</p>
+  {%- endif %}
+
+    {{ form_buttons('%s Bild hochladen'|format(render_icon('upload'))|safe, cancel_url=contestant_view_url) }}
+  </form>
+
+{%- endblock %}

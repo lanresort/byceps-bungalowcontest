@@ -1,0 +1,145 @@
+{% extends 'layout/admin/base.html' %}
+{% from 'macros/admin.html' import render_extra_in_heading %}
+{% from 'macros/admin/user.html' import render_user_avatar_16_and_admin_link %}
+{% from 'macros/forms.html' import form_buttons %}
+{% from 'macros/icons.html' import render_icon %}
+{% from 'macros/misc.html' import render_tag %}
+{% set current_page = 'bungalow_contest_admin' %}
+{% set current_page_party = party %}
+{% set title = 'Bungalow-Contest' %}
+
+{% block head %}
+  <style>
+    .tag.contest-notstarted {
+      background-color: #1199ff;
+    }
+
+    .tag.contest-registration {
+      background-color: #55cc00;
+    }
+
+    .tag.contest-rating {
+      background-color: #ffcc11;
+    }
+
+    .tag.contest-ended {
+      background-color: #999999;
+    }
+  </style>
+{%- endblock %}
+
+{% macro render_phase(phase) %}
+  {%- set phase_name = phase.name %}
+  {%- if phase_name == 'not_started' -%}
+    {{ render_tag('wartet auf Eröffnung', icon='pending', class='contest-notstarted') }}
+  {%- elif phase_name == 'registration' -%}
+    {{ render_tag('Anmeldung offen', icon='edit', class='contest-registration') }}
+  {%- elif phase_name == 'rating' -%}
+    {{ render_tag('Bewertung', icon='user-comment', class='contest-rating') }}
+  {%- elif phase_name == 'ended' -%}
+    {{ render_tag('beendet', icon='archived', class='contest-ended') }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% block body %}
+
+  <nav class="breadcrumbs">
+    <ol>
+      <li>{{ party.title }}</li>
+    </ol>
+  </nav>
+  <h1>Bungalow-Contest</h1>
+
+  {%- if contest is not none %}
+
+  <table class="index">
+    <tr>
+      <th>Phase</th>
+      <td>
+        <div class="dropdown">
+          <button class="dropdown-toggle button button--clear">{{ render_phase(contest.phase) }} {{ render_icon('caret-down') }}</button>
+          <ol class="dropdown-menu dropdown-menu--right">
+            <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.not_started.name) }}" data-action="switch-to-phase-not-started">{{ render_phase(Phase.not_started) }}</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.registration.name) }}" data-action="switch-to-phase-registration">{{ render_phase(Phase.registration) }}</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.rating.name) }}" data-action="switch-to-phase-rating">{{ render_phase(Phase.rating) }}</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.ended.name) }}" data-action="switch-to-phase-ended">{{ render_phase(Phase.ended) }}</a></li>
+          </ol>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <h2>Jurymitglieder {{ render_extra_in_heading(jurors|length) }}</h2>
+  <ul>
+    {%- for juror in jurors|sort(attribute='screen_name') %}
+    <li>{{ render_user_avatar_16_and_admin_link(juror) }}</li>
+    {%- endfor %}
+  </ul>
+
+  <h2>Bewertungskategorien {{ render_extra_in_heading(contest.attributes|length) }}</h2>
+  <ul>
+    {%- for category in contest.attributes|sort(attribute='title') %}
+    <li>{{ category.title }}</li>
+    {%- endfor %}
+  </ul>
+
+  <h2>Kandidaten {{ render_extra_in_heading(contest.contestants|length) }}</h2>
+  <ul>
+    {%- for contestant in contest.contestants|sort(attribute='bungalow_occupancy.bungalow.number') %}
+    <li>Bungalow {{ contestant.bungalow_occupancy.bungalow.number }}</li>
+    {%- endfor %}
+  </ul>
+
+  <h2>Bewertungen</h2>
+  <table class="index">
+    <thead>
+      <tr>
+        <th>Bungalow</th>
+        {%- for attribute in attributes_ordered %}
+        <th>{{ attribute.title }}</th>
+        {%- endfor %}
+      </tr>
+    </thead>
+    <tbody>
+    {%- for contestant in contest.contestants %}
+    <tr>
+      <td class="bignumber">{{ contestant.bungalow_occupancy.bungalow.number }}</td>
+      {%- with aggregated_contestant_ratings = aggregated_ratings[contestant.id] %}
+        {%- for attribute in attributes_ordered %}
+      <td style="text-align: center;">
+          {%- with aggregated_attribute_rating = aggregated_contestant_ratings[attribute.id] %}
+        {{ '%.2f'|format(aggregated_attribute_rating.average_value) }}<br>
+        <small class="dimmed" style="white-space: nowrap;">{{ aggregated_attribute_rating.rating_count }} Stimme(n)</small>
+          {%- endwith %}
+      </td>
+        {%- endfor %}
+      {%- endwith %}
+    </tr>
+    {%- endfor %}
+    </tbody>
+  </table>
+  <small>
+    <p style="margin-top: 1.5rem;"><strong>{{ rating_users_total }}</strong> Benutzer haben an der Bewertung teilgenommen.</p>
+  </small>
+
+  {%- else %}
+
+  <p>Es existiert kein Bungalow-Contest für diese Party.</p>
+  <form action="{{ url_for('.create', party_id=party.id) }}" method="post">
+    {{ form_buttons('Erstellen') }}
+  </form>
+
+  {%- endif %}
+
+{%- endblock %}
+
+{% block scripts %}
+    <script>
+      onDomReady(function() {
+        post_on_click_then_reload('[data-action="switch-to-phase-not-started"]');
+        post_on_click_then_reload('[data-action="switch-to-phase-registration"]');
+        post_on_click_then_reload('[data-action="switch-to-phase-rating"]');
+        post_on_click_then_reload('[data-action="switch-to-phase-ended"]');
+      });
+    </script>
+{% endblock %}

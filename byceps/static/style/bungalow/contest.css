@@ -1,0 +1,113 @@
+.bungalow-contest-candidate {
+  border-top: #cccccc solid 1px;
+  margin-top: 2rem;
+}
+
+.bungalow-contest-candidate > div {
+  margin-left: 2rem;
+}
+
+.bungalow-contest-description {
+  border: #dddddd solid 1px;
+  border-radius: 3px;
+  display: block;
+  margin: 1rem 0;
+  padding: 15px;
+  position: relative;
+}
+
+.bungalow-contest-description:after,
+.bungalow-contest-description:before {
+  border: solid transparent;
+  bottom: 100%;
+  content: " ";
+  height: 0;
+  left: 30px;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+}
+
+.bungalow-contest-description:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+.bungalow-contest-description:before {
+  border-color: rgba(221, 221, 221, 0);
+  border-bottom-color: #dddddd;
+  border-width: 11px;
+  margin-left: -11px;
+}
+
+.bungalow-contest-images {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -20px 0 0 -20px;
+  max-width: 658px;
+}
+
+.bungalow-contest-images li {
+  flex: 0 0 20%;
+  max-width: 20%;
+  padding: 20px 0 0 20px;
+}
+
+.bungalow-contest-images figure img {
+  margin: 0 auto;
+}
+
+.bungalow-contest-images figcaption {
+  overflow-x: auto;
+}
+
+.bungalow-contest-candidate td {
+  font-size: 0.75rem !important;
+}
+
+.bungalow-contest-ratings {
+  margin-top: 1rem;
+}
+
+.rating:not(:checked) > input {
+  position: absolute;
+  top: -9999px;
+  clip: rect(0, 0, 0, 0);
+}
+
+.rating:not(:checked) > label {
+  color: #aaaaaa;
+  cursor: pointer;
+  float: right;
+  font-size: 1.5rem;
+  margin-top: -0.6rem;
+  overflow: hidden;
+  text-shadow: 1px 1px 1px #999999;
+  white-space: nowrap;
+  width: 1.5rem;
+}
+
+.rating:not(:checked) > label:before {
+  content: '★ ';
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: #00aaff;
+}
+
+.rating > input:checked ~ label {
+  color: #ffaa00;
+}
+
+.rating {
+  position: relative;
+}
+
+.rating .success {
+  left: -1rem;
+  position: absolute;
+  top: 0;
+}

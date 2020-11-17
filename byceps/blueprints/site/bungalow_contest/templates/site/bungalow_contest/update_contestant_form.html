@@ -1,0 +1,32 @@
+{% extends 'layout/base.html' %}
+{% from 'macros/forms.html' import form_buttons, form_field, form_fieldset %}
+{% set title = 'Bungalow-Kandidatur bearbeiten' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/bungalow/contest.css') }}">
+{% endblock %}
+
+{% block body %}
+  {%- set contestant_view_url = url_for('.view_contestant', id=contestant.id) %}
+
+  <nav class="breadcrumbs">
+    <ol>
+      <li><a href="{{ url_for('.index') }}">Bungalow-Contest</a></li>
+      <li><a href="{{ url_for('.contestants') }}">Kandidaten</a></li>
+      <li><a href="{{ contestant_view_url }}">Bungalow {{ contestant.bungalow_occupancy.bungalow.number }}</a></li>
+    </ol>
+  </nav>
+  <h1>{{ title }}</h1>
+
+  <form action="{{ url_for('.update_contestant', id=contestant.id) }}" method="post">
+  {%- call form_fieldset() %}
+    {{ form_field(form.description, class='wide', required='required', autofocus='autofocus') }}
+    <small class="dimmed">
+      <p><a href="http://de.wikipedia.org/wiki/BBCode" target="_blank">BBCode</a> wird unterstützt.</p>
+    </small>
+  {%- endcall %}
+
+    {{ form_buttons('Speichern', cancel_url=contestant_view_url) }}
+  </form>
+
+{%- endblock %}

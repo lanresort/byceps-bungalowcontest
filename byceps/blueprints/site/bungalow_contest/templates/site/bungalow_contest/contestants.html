@@ -1,0 +1,123 @@
+{% extends 'layout/base.html' %}
+{% from 'macros/bungalow.html' import render_bungalow_avatar %}
+{% from 'macros/bungalow_contest.html' import render_contestant_images %}
+{% from 'macros/icons.html' import render_icon %}
+{% set current_page = 'bungalow_contest' %}
+{% set title = 'Bungalow-Contest' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/bungalow/contest.css') }}">
+{% endblock %}
+
+{% block body %}
+
+  <nav class="breadcrumbs">
+    <ol>
+      <li><a href="{{ url_for('.index') }}">Bungalow-Contest</a></li>
+    </ol>
+  </nav>
+  <h1>Kandidaten</h1>
+
+  {%- if contest.contestants %}
+    {%- for contestant in contest.contestants|sort(attribute='bungalow_occupancy.bungalow.number') %}
+      {%- with bungalow = contestant.bungalow_occupancy.bungalow %}
+  <div class="bungalow-contest-candidate">
+    <h2>
+      {{ render_bungalow_avatar(bungalow, 24) }}
+      <a href="{{ url_for('.view_contestant', id=contestant.id) }}">
+        {{- bungalow.number }}{% if bungalow.title %} – {{ bungalow.title }}{% endif -%}
+      </a>
+    </h2>
+    <div>
+
+{{ render_contestant_images(contestant) }}
+
+        {%- if contest.phase == Phase.rating %}
+          {%- with user_ratings_by_attribute = user_ratings_by_contestant.get(contestant.id, {}) %}
+      <table class="bungalow-contest-ratings">
+            {%- for attribute in contest.attributes %}
+              {%- with
+                name = 'rating-{}'.format(attribute.id),
+                values = [1, 2, 3, 4, 5, 6, 7],
+                default_value = 4,
+                user_rating = user_ratings_by_attribute.get(attribute.id)
+              %}
+                {%- with user_value = (user_rating.value if (user_rating is not none) else default_value) %}
+        <tr>
+          <td>
+            <form>
+              <div class="rating">
+                <span class="success" hidden>{{ render_icon('success') }}</span>
+                  {%- for value in values|reverse %}
+                <input
+                    type="radio"
+                    id="{{ name }}-{{ loop.index }}"
+                    name="{{ name }}"
+                    value="{{ value }}"
+                    {{- ' checked' if (value == user_value) else '' }}>
+                <label
+                    data-rating-contestant-id="{{ contestant.id }}"
+                    data-rating-attribute-id="{{ attribute.id }}"
+                    data-rating-value="{{ value }}"
+                    for="{{ name }}-{{ loop.index }}"></label>
+                  {%- endfor %}
+              </div>
+            </form>
+          </td>
+          <td>{{ attribute.title }}</td>
+        </tr>
+                {%- endwith %}
+              {%- endwith %}
+            {%- endfor %}
+      </table>
+          {%- endwith %}
+        {%- endif %}
+
+    </div>
+  </div>
+      {%- endwith %}
+    {%- endfor %}
+  {%- else %}
+  <p class="dimmed">Es ist noch kein Bungalow angemeldet.</p>
+  {%- endif %}
+
+{%- endblock %}
+
+{% block scripts %}
+    <script>
+      onDomReady(function() {
+        document.querySelectorAll('.rating')
+          .forEach(function(ratingElem) {
+            const successIndicator = ratingElem.querySelector('.success');
+            ratingElem.querySelectorAll('label')
+              .forEach(function(labelElem) {
+                labelElem.addEventListener('click', function(event) {
+                  // URL is inserted by template engine.
+                  const url = '{{ url_for('.rate') }}';
+
+                  dataset = labelElem.dataset
+                  const data = {
+                    contestant_id: dataset.ratingContestantId,
+                    attribute_id: dataset.ratingAttributeId,
+                    value: dataset.ratingValue,
+                  };
+
+                  fetch(url, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data),
+                  })
+                    .then(response => {
+                      const radioButton = labelElem.previousElementSibling;
+                      radioButton.checked = true;
+                      successIndicator.hidden = false;
+                      setTimeout(function() { successIndicator.hidden = true; }, 1000);
+                    });
+
+                  event.preventDefault();
+                });
+              });
+          });
+      });
+    </script>
+{%- endblock %}

@@ -1,0 +1,63 @@
+{% extends 'layout/base.html' %}
+{% from 'macros/bungalow.html' import render_bungalow_avatar, render_bungalow_link %}
+{% from 'macros/bungalow_contest.html' import render_contestant_description, render_contestant_images, render_contestant_occupants %}
+{% from 'macros/icons.html' import render_icon %}
+{% set current_page = 'bungalow_contest' %}
+{% set title = 'Bungalow-Contest - Bungalow %d'|format(contestant.bungalow_occupancy.bungalow.number) %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/bungalow/contest.css') }}">
+{% endblock %}
+
+{% block body %}
+
+  {%- with bungalow = contestant.bungalow_occupancy.bungalow %}
+
+  <div class="row row--space-between">
+    <div class="column-auto">
+{{ render_bungalow_avatar(bungalow, 128) }}
+    </div>
+    <div class="column-auto column-auto--grow">
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="{{ url_for('.index') }}">Bungalow-Contest</a></li>
+          <li><a href="{{ url_for('.contestants') }}">Kandidaten</a></li>
+        </ol>
+      </nav>
+      <h1>
+        {%- filter dim %}Bungalow {{ bungalow.number }}{% endfilter %}<br>
+        {{- bungalow.title or '' -}}
+      </h1>
+    </div>
+    <div class="column-auto">
+    {%- if bungalow.is_managed_by(g.current_user.id) %}
+      <div class="button-row button-row--right" style="float: right;">
+        <div class="dropdown">
+          <button class="dropdown-toggle button"><span>Aktionen</span> {{ render_icon('caret-down') }}</button>
+          <ol class="dropdown-menu dropdown-menu--right">
+            <li><a class="dropdown-item" href="{{ url_for('.update_contestant_form', id=contestant.id) }}">{{ render_icon('edit') }} <span>Beschreibung bearbeiten</span></a></li>
+            <li><a class="dropdown-item" href="{{ url_for('.update_contestant_images_form', id=contestant.id) }}">{{ render_icon('edit') }} <span>Bilder verwalten</span></a></li>
+          </ol>
+        </div>
+      </div>
+    {%- endif %}
+    </div>
+  </div>
+
+  <p style="clear: both; margin: 2.5rem 0 1rem 0;">Hier wohnen {{ render_contestant_occupants(occupants) }}.</p>
+
+    {%- if contestant.description %}
+  <p>{{ render_icon('bungalow') }} {{ render_bungalow_link(bungalow) }} stellt sich vor:</p>
+{{ render_contestant_description(contestant) }}
+    {%- endif %}
+
+  <h2>Bilder</h2>
+    {%- if contestant.images %}
+{{ render_contestant_images(contestant) }}
+    {%- else %}
+  <p class="dimmed">Die Bewohner haben noch keine Bilder hochgeladen.</p>
+    {%- endif %}
+
+  {%- endwith %}
+
+{%- endblock %}
