@@ -47,6 +47,19 @@ To integrate this with BYCEPS:
   respective navigations.
 
 
+Screenshot
+==========
+
+
+The integrated admin UI for a bungalow contest looks like this:
+
+.. figure:: https://raw.githubusercontent.com/lanresort/bungalowcontest/main/screenshots/bungalow-contest_admin.png
+   :align: left
+   :alt: Screenshot of bungalow contest admin UI
+   :height: 1130
+   :width: 800
+
+
 License
 =======
 
