@@ -47,8 +47,17 @@ To integrate this with BYCEPS:
   respective navigations.
 
 
-Screenshot
-==========
+Screenshots
+===========
+
+
+The list display of candidates during the rating phase looks like this:
+
+.. figure:: https://raw.githubusercontent.com/lanresort/bungalowcontest/main/screenshots/bungalow-contest_rating.png
+   :align: left
+   :alt: Screenshot of bungalow contest candidates rating
+   :height: 565
+   :width: 800
 
 
 The integrated admin UI for a bungalow contest looks like this:
