@@ -58,7 +58,7 @@ def index():
     contest = _get_contest_or_404()
 
     inhabited_bungalow = bungalow_service.find_bungalow_inhabited_by_user(
-        g.current_user.id, g.party_id
+        g.user.id, g.party_id
     )
 
     if inhabited_bungalow:
@@ -72,7 +72,7 @@ def index():
         inhabited_bungalow_manager = None
 
     occupancy = bungalow_occupancy_service.find_occupancy_managed_by_user(
-        g.party_id, g.current_user.id
+        g.party_id, g.user.id
     )
 
     contestant = None
@@ -110,10 +110,10 @@ def register():
     contest = _get_contest_or_404()
 
     occupancy = bungalow_occupancy_service.find_occupancy_managed_by_user(
-        g.party_id, g.current_user.id
+        g.party_id, g.user.id
     )
 
-    if (occupancy is None) or not occupancy.is_managed_by(g.current_user.id):
+    if (occupancy is None) or not occupancy.is_managed_by(g.user.id):
         flash_error(
             'Nur der/die Bungalowverwalter/in '
             'kann einen Bungalow zum Wettbewerb anmelden.'
@@ -249,12 +249,12 @@ def contestants():
     contest = _get_contest_or_404()
 
     user_ratings_by_contestant = {}
-    if not g.current_user.is_anonymous:
+    if not g.user.is_anonymous:
         for contestant in contest.contestants:
             user_ratings_by_contestant[
                 contestant.id
             ] = bungalow_contest_service.get_ratings_by_user(
-                g.current_user.id, contestant.id
+                g.user.id, contestant.id
             )
 
     return {
@@ -282,7 +282,7 @@ def rate():
     if not attribute_id:
         abort(400, 'Missing attribute ID.')
 
-    creator = g.current_user
+    creator = g.user
 
     value = json_data.get('value')
     if not value:

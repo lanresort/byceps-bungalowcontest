@@ -18,7 +18,7 @@
 
   {%- elif contest.phase == Phase.registration %}
 
-    {%- if g.current_user.is_anonymous %}
+    {%- if g.user.is_anonymous %}
 
   <p>Du musst <a href="{{ url_for('authentication.login_form') }}">angemeldet</a> und Verwalter/in eines Bungalows sein um diesen zum Wettbewerb anmelden zu können.</p>
 

@@ -30,7 +30,7 @@
       </h1>
     </div>
     <div class="column-auto">
-    {%- if bungalow.is_managed_by(g.current_user.id) %}
+    {%- if bungalow.is_managed_by(g.user.id) %}
       <div class="button-row button-row--right" style="float: right;">
         <div class="dropdown">
           <button class="dropdown-toggle button"><span>Aktionen</span> {{ render_icon('caret-down') }}</button>
