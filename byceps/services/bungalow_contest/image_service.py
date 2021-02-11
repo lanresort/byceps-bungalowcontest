@@ -20,7 +20,7 @@ from ...typing import PartyID
 from ..image import service as image_service
 from ..image.service import ImageTypeProhibited
 
-from .models.contestant import Contestant, Image
+from .dbmodels.contestant import Contestant, Image
 
 
 def upload(

@@ -1,6 +1,6 @@
 """
-byceps.services.bungalow_contest.models.contestant
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+byceps.services.bungalow_contest.dbmodels.contestant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Copyright: 2006-2021 Jochen Kupperschmidt
 :License: Revised BSD (see `LICENSE` file for details)
@@ -13,7 +13,7 @@ from uuid import UUID
 from ....database import db, generate_uuid
 from ....util.instances import ReprBuilder
 
-from ...bungalow.occupancy.models.occupancy import (
+from ...bungalow.occupancy.dbmodels.occupancy import (
     Occupancy as BungalowOccupancy,
 )
 

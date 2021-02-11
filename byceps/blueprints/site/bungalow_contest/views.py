@@ -13,12 +13,12 @@ from ....services.bungalow import service as bungalow_service
 from ....services.bungalow.occupancy import (
     service as bungalow_occupancy_service,
 )
-from ....services.bungalow_contest.models.contestant import (
+from ....services.bungalow_contest.dbmodels.contestant import (
     Contestant,
     MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT,
 )
-from ....services.bungalow_contest.models import jury  # Load models.
-from ....services.bungalow_contest.models.rating import Attribute
+from ....services.bungalow_contest.dbmodels import jury  # Load models.
+from ....services.bungalow_contest.dbmodels.rating import Attribute
 from ....services.bungalow_contest import image_service
 from ....services.bungalow_contest import service as bungalow_contest_service
 from ....services.bungalow_contest.transfer.models import Phase

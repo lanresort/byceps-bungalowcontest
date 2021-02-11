@@ -9,8 +9,8 @@ byceps.services.bungalow_contest.aggregation
 from collections import defaultdict
 from typing import Dict, List
 
-from .models.contest import Contest
-from .models.rating import Attribute, Rating
+from .dbmodels.contest import Contest
+from .dbmodels.rating import Attribute, Rating
 from .transfer.models import (
     AttributeID,
     AggregatedAttributeRating,

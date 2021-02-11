@@ -14,10 +14,10 @@ from ...typing import PartyID, UserID
 
 from ..user.dbmodels.user import User
 
-from .models.contest import Contest
-from .models.contestant import Contestant
-from .models.jury import JuryMembership
-from .models.rating import Attribute, Rating
+from .dbmodels.contest import Contest
+from .dbmodels.contestant import Contestant
+from .dbmodels.jury import JuryMembership
+from .dbmodels.rating import Attribute, Rating
 from .transfer.models import AttributeID, ContestantID, ContestID, Phase
 
 

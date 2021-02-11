@@ -9,7 +9,7 @@ byceps.blueprints.admin.bungalow_contest.views
 from flask import abort
 
 from ....services.bungalow import service as bungalow_service
-from ....services.bungalow_contest.models import jury, rating  # Load models.
+from ....services.bungalow_contest.dbmodels import jury, rating  # Load models.
 from ....services.bungalow_contest import (
     aggregation,
     service as bungalow_contest_service,
