@@ -17,13 +17,11 @@ from ....services.bungalow_contest import (
 from ....services.bungalow_contest.transfer.models import Phase
 from ....services.party import service as party_service
 from ....services.user import service as user_service
+from ....util.authorization import register_permission_enum
 from ....util.framework.blueprint import create_blueprint
 from ....util.framework.flash import flash_error, flash_success
 from ....util.framework.templating import templated
-from ....util.views import redirect_to, respond_no_content
-
-from ...common.authorization.decorators import permission_required
-from ...common.authorization.registry import permission_registry
+from ....util.views import permission_required, redirect_to, respond_no_content
 
 from .authorization import BungalowContestPermission
 
@@ -39,7 +37,7 @@ ATTRIBUTE_TITLES = [
 blueprint = create_blueprint('bungalow_contest_admin', __name__)
 
 
-permission_registry.register_enum(BungalowContestPermission)
+register_permission_enum(BungalowContestPermission)
 
 
 @blueprint.route('/for_party/<party_id>')
