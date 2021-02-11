@@ -77,7 +77,9 @@ def index():
 
     contestant = None
     if contest and occupancy:
-        contestant = bungalow_contest_service.find_contestant(occupancy.id)
+        contestant = bungalow_contest_service.find_contestant_for_bungalow(
+            occupancy.id
+        )
 
     return {
         'contest': contest,
@@ -120,7 +122,7 @@ def register():
         )
         return redirect_to('.index')
 
-    if bungalow_contest_service.is_contestant(occupancy.id):
+    if bungalow_contest_service.is_bungalow_contestant(occupancy.id):
         flash_error(
             f'Bungalow {occupancy.bungalow.number} '
             'ist bereits zum Wettbewerb angemeldet.'

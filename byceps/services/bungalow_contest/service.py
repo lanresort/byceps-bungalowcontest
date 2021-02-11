@@ -65,14 +65,16 @@ def switch_contest_to_phase(contest_id: ContestID, phase: Phase) -> None:
 # contestant
 
 
-def find_contestant(bungalow_occupancy_id: UUID) -> Optional[Contestant]:
+def find_contestant_for_bungalow(
+    bungalow_occupancy_id: UUID,
+) -> Optional[Contestant]:
     """Return the registration of the bungalow for the contest, if it exists."""
     return Contestant.query \
         .filter_by(bungalow_occupancy_id=bungalow_occupancy_id) \
         .one_or_none()
 
 
-def is_contestant(bungalow_occupancy_id: UUID) -> bool:
+def is_bungalow_contestant(bungalow_occupancy_id: UUID) -> bool:
     """Return `True` if the bungalow is registered for the contest."""
     count = Contestant.query \
         .filter_by(bungalow_occupancy_id=bungalow_occupancy_id) \
