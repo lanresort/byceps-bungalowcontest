@@ -280,6 +280,12 @@ def rate():
     if not contestant_id:
         abort(400, 'Missing contestant ID.')
 
+    contestant = bungalow_contest_service.find_contestant(
+        g.party_id, contestant_id
+    )
+    if contestant is None:
+        abort(400, 'Unknown contestant ID.')
+
     attribute_id = json_data.get('attribute_id')
     if not attribute_id:
         abort(400, 'Missing attribute ID.')
@@ -313,7 +319,9 @@ def _get_contest_or_404():
 
 
 def _get_contestant_or_404(contestant_id):
-    contestant = Contestant.query.get(contestant_id)
+    contestant = bungalow_contest_service.find_contestant(
+        g.party_id, contestant_id
+    )
 
     if contestant is None:
         abort(404)

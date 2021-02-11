@@ -65,6 +65,22 @@ def switch_contest_to_phase(contest_id: ContestID, phase: Phase) -> None:
 # contestant
 
 
+def find_contestant(
+    party_id: PartyID, contestant_id: ContestantID
+) -> Optional[Contestant]:
+    """Return the contestant with that ID, if it exists.
+
+    The party ID is checked as an additional measure so that a
+    contestant is not returned if it doesn't belong to the current
+    site's party.
+    """
+    return Contestant.query \
+        .join(Contest) \
+        .filter(Contest.party_id == party_id) \
+        .filter(Contestant.id == contestant_id) \
+        .one_or_none()
+
+
 def find_contestant_for_bungalow(
     bungalow_occupancy_id: UUID,
 ) -> Optional[Contestant]:
