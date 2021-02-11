@@ -12,7 +12,7 @@ from uuid import UUID
 from ...database import db
 from ...typing import PartyID, UserID
 
-from ..user.models.user import User
+from ..user.dbmodels.user import User
 
 from .models.contest import Contest
 from .models.contestant import Contestant

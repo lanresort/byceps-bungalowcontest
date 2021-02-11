@@ -12,7 +12,7 @@ from ....database import db, generate_uuid
 from ....typing import UserID
 from ....util.instances import ReprBuilder
 
-from ...user.models.user import User
+from ...user.dbmodels.user import User
 
 from ..transfer.models import AttributeID, ContestantID
 

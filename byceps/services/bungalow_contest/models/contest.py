@@ -12,7 +12,7 @@ from ....database import BaseQuery, db, generate_uuid
 from ....typing import PartyID
 from ....util.instances import ReprBuilder
 
-from ...party.models.party import Party
+from ...party.dbmodels.party import Party
 
 from ..transfer.models import Phase
 
