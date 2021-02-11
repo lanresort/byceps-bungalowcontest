@@ -28,9 +28,7 @@ from ....util.framework.blueprint import create_blueprint
 from ....util.framework.flash import flash_error, flash_success
 from ....util.image.models import Dimensions, ImageType
 from ....util.framework.templating import templated
-from ....util.views import redirect_to, respond_no_content
-
-from ...common.authentication.decorators import login_required
+from ....util.views import login_required, redirect_to, respond_no_content
 
 from .forms import ContestantUpdateForm, ImageCreateForm
 
@@ -251,7 +249,7 @@ def contestants():
     contest = _get_contest_or_404()
 
     user_ratings_by_contestant = {}
-    if not g.user.is_anonymous:
+    if g.user.authenticated:
         for contestant in contest.contestants:
             user_ratings_by_contestant[
                 contestant.id
