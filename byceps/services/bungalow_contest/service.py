@@ -6,7 +6,8 @@ byceps.services.bungalow_contest.service
 :License: Revised BSD (see `LICENSE` file for details)
 """
 
-from typing import Dict, Optional, Set
+from __future__ import annotations
+from typing import Optional
 from uuid import UUID
 
 from ...database import db
@@ -25,7 +26,7 @@ from .transfer.models import AttributeID, ContestantID, ContestID, Phase
 # contest
 
 
-def create_contest(party_id: PartyID, attribute_titles: Set[str]) -> ContestID:
+def create_contest(party_id: PartyID, attribute_titles: set[str]) -> ContestID:
     """Create a contest for that party."""
     contest = Contest(party_id)
     db.session.add(contest)
@@ -150,7 +151,7 @@ def rate(
 
 def get_ratings_by_user(
     user_id: UserID, contestant_id: ContestantID
-) -> Dict[UUID, Rating]:
+) -> dict[UUID, Rating]:
     """Return the user's ratings for that contestant, indexed by attribute."""
     ratings = Rating.query \
         .filter_by(contestant_id=contestant_id) \
