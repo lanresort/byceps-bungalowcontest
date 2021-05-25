@@ -46,7 +46,7 @@ MAXIMUM_DIMENSIONS = Dimensions(1280, 1024)
 blueprint = create_blueprint('bungalow_contest', __name__)
 
 
-@blueprint.route('/')
+@blueprint.get('/')
 @templated
 def index():
     """The entry page for the contest, showing information based on the
@@ -89,7 +89,7 @@ def index():
     }
 
 
-@blueprint.route('/contestants/<uuid:id>')
+@blueprint.get('/contestants/<uuid:id>')
 @templated
 def view_contestant(id):
     """View a constestant's presentation."""
@@ -104,7 +104,7 @@ def view_contestant(id):
 
 
 @login_required
-@blueprint.route('/register', methods=['POST'])
+@blueprint.post('/register')
 def register():
     """Register an occupied bungalow as a contestant."""
     contest = _get_contest_or_404()
@@ -144,7 +144,7 @@ def register():
     return redirect_to('.index')
 
 
-@blueprint.route('/contestants/<uuid:id>/update')
+@blueprint.get('/contestants/<uuid:id>/update')
 @login_required
 @templated
 def update_contestant_form(id, *, erroneous_form=None):
@@ -163,7 +163,7 @@ def update_contestant_form(id, *, erroneous_form=None):
     }
 
 
-@blueprint.route('/contestants/<uuid:id>', methods=['POST'])
+@blueprint.post('/contestants/<uuid:id>')
 @login_required
 def update_contestant(id):
     """Update the contestant."""
@@ -185,7 +185,7 @@ def update_contestant(id):
     return redirect_to('.view_contestant', id=contestant.id)
 
 
-@blueprint.route('/contestants/<uuid:id>/images/update')
+@blueprint.get('/contestants/<uuid:id>/images/update')
 @login_required
 @templated
 def update_contestant_images_form(id, *, erroneous_form=None):
@@ -201,7 +201,7 @@ def update_contestant_images_form(id, *, erroneous_form=None):
     }
 
 
-@blueprint.route('/contestants/<uuid:id>/images', methods=['POST'])
+@blueprint.post('/contestants/<uuid:id>/images')
 @login_required
 def create_contestant_image(id):
     """Upload a picture to present the contestant."""
@@ -242,7 +242,7 @@ def create_contestant_image(id):
     return redirect_to('.update_contestant_images_form', id=contestant.id)
 
 
-@blueprint.route('/contestants')
+@blueprint.get('/contestants')
 @templated
 def contestants():
     """List constestants."""
@@ -264,7 +264,7 @@ def contestants():
     }
 
 
-@blueprint.route('/ratings', methods=['PUT'])
+@blueprint.put('/ratings')
 @login_required
 @respond_no_content
 def rate():

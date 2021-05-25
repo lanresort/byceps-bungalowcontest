@@ -40,7 +40,7 @@ blueprint = create_blueprint('bungalow_contest_admin', __name__)
 register_permission_enum(BungalowContestPermission)
 
 
-@blueprint.route('/for_party/<party_id>')
+@blueprint.get('/for_party/<party_id>')
 @permission_required(BungalowContestPermission.view)
 @templated
 def view(party_id):
@@ -77,7 +77,7 @@ def view(party_id):
     }
 
 
-@blueprint.route('/for_party/<party_id>', methods=['POST'])
+@blueprint.post('/for_party/<party_id>')
 @permission_required(BungalowContestPermission.create)
 def create(party_id):
     """Create a bungalow contest for the party."""
@@ -95,7 +95,7 @@ def create(party_id):
     return redirect_to('.view', party_id=party.id)
 
 
-@blueprint.route('/<contest_id>/phase/<phase_name>', methods=['POST'])
+@blueprint.post('/<contest_id>/phase/<phase_name>')
 @permission_required(BungalowContestPermission.manage)
 @respond_no_content
 def switch_to_phase(contest_id, phase_name):
