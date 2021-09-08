@@ -70,27 +70,40 @@
   </table>
 
   <h2>Jurymitglieder {{ render_extra_in_heading(jurors|length) }}</h2>
+    {%- if jurors %}
   <ul>
     {%- for juror in jurors|sort(attribute='screen_name') %}
     <li>{{ render_user_avatar_and_admin_link(juror, size=16) }}</li>
     {%- endfor %}
   </ul>
+    {%- else %}
+  <div class="dimmed-box centered">Es wurden noch keine Jurymitglieder ernannt.</div>
+    {%- endif %}
 
   <h2>Bewertungskategorien {{ render_extra_in_heading(contest.attributes|length) }}</h2>
+    {%- if contest.attributes %}
   <ul>
     {%- for category in contest.attributes|sort(attribute='title') %}
     <li>{{ category.title }}</li>
     {%- endfor %}
   </ul>
+    {%- else %}
+  <div class="dimmed-box centered">Es sind keine Bewertungskategorien definiert.</div>
+    {%- endif %}
 
   <h2>Kandidaten {{ render_extra_in_heading(contest.contestants|length) }}</h2>
+    {%- if contest.contestants %}
   <ul>
     {%- for contestant in contest.contestants|sort(attribute='bungalow_occupancy.bungalow.number') %}
     <li>Bungalow {{ contestant.bungalow_occupancy.bungalow.number }}</li>
     {%- endfor %}
   </ul>
+    {%- else %}
+  <div class="dimmed-box centered">Es haben sich noch keine Bungalows angemeldet.</div>
+    {%- endif %}
 
   <h2>Bewertungen</h2>
+    {%- if aggregated_ratings %}
   <table class="index">
     <thead>
       <tr>
@@ -121,10 +134,14 @@
   <small>
     <p style="margin-top: 1.5rem;"><strong>{{ rating_users_total }}</strong> Benutzer haben an der Bewertung teilgenommen.</p>
   </small>
+    {%- else %}
+  <div class="dimmed-box centered">Es liegen noch keine Bewertungen vor.</div>
+    {%- endif %}
 
   {%- else %}
 
-  <p>Es existiert kein Bungalow-Contest für diese Party.</p>
+  <div class="dimmed-box centered">Es existiert kein Bungalow-Contest für diese Party.</div>
+
   <form action="{{ url_for('.create', party_id=party.id) }}" method="post">
     {{ form_buttons('Erstellen') }}
   </form>
