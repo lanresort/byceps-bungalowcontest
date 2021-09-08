@@ -6,7 +6,7 @@
 {% from 'macros/misc.html' import render_tag %}
 {% set current_page = 'bungalow_contest_admin' %}
 {% set current_page_party = party %}
-{% set title = 'Bungalow-Contest' %}
+{% set page_title = 'Bungalow-Contest' %}
 
 {% block head %}
   <style>
@@ -48,7 +48,7 @@
       <li>{{ party.title }}</li>
     </ol>
   </nav>
-  <h1>Bungalow-Contest</h1>
+  <h1>{{ page_title }}</h1>
 
   {%- if contest is not none %}
 

@@ -1,6 +1,6 @@
 {% extends 'layout/base.html' %}
 {% from 'macros/forms.html' import form_buttons, form_field, form_fieldset %}
-{% set title = 'Bungalow-Kandidatur bearbeiten' %}
+{% set page_title = 'Bungalow-Kandidatur bearbeiten' %}
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style/bungalow/contest.css') }}">
@@ -16,7 +16,7 @@
       <li><a href="{{ contestant_view_url }}">Bungalow {{ contestant.bungalow_occupancy.bungalow.number }}</a></li>
     </ol>
   </nav>
-  <h1>{{ title }}</h1>
+  <h1>{{ page_title }}</h1>
 
   <form action="{{ url_for('.update_contestant', id=contestant.id) }}" method="post">
   {%- call form_fieldset() %}

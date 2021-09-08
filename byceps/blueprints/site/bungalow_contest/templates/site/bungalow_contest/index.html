@@ -2,11 +2,11 @@
 {% from 'macros/forms.html' import form_buttons %}
 {% from 'macros/user.html' import render_user_link %}
 {% set current_page = 'bungalow_contest' %}
-{% set title = 'Bungalow-Contest' %}
+{% set page_title = 'Bungalow-Contest' %}
 
 {% block body %}
 
-  <h1>Bungalow-Contest</h1>
+  <h1>{{ page_title }}</h1>
 
   {%- if contest.phase != Phase.not_started %}
   <p><a href="{{ url_for('.contestants') }}">Kandidaten</a></p>

@@ -3,7 +3,7 @@
 {% from 'macros/bungalow_contest.html' import render_contestant_description, render_contestant_images, render_contestant_occupants %}
 {% from 'macros/icons.html' import render_icon %}
 {% set current_page = 'bungalow_contest' %}
-{% set title = 'Bungalow-Contest - Bungalow %d'|format(contestant.bungalow_occupancy.bungalow.number) %}
+{% set page_title = ['Bungalow-Contest', 'Bungalow %d'|format(contestant.bungalow_occupancy.bungalow.number)] %}
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style/bungalow/contest.css') }}">
