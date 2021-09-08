@@ -1,6 +1,6 @@
 {% extends 'layout/admin/base.html' %}
 {% from 'macros/admin.html' import render_extra_in_heading %}
-{% from 'macros/admin/user.html' import render_user_avatar_16_and_admin_link %}
+{% from 'macros/admin/user.html' import render_user_avatar_and_admin_link %}
 {% from 'macros/forms.html' import form_buttons %}
 {% from 'macros/icons.html' import render_icon %}
 {% from 'macros/misc.html' import render_tag %}
@@ -72,7 +72,7 @@
   <h2>Jurymitglieder {{ render_extra_in_heading(jurors|length) }}</h2>
   <ul>
     {%- for juror in jurors|sort(attribute='screen_name') %}
-    <li>{{ render_user_avatar_16_and_admin_link(juror) }}</li>
+    <li>{{ render_user_avatar_and_admin_link(juror, size=16) }}</li>
     {%- endfor %}
   </ul>
 
