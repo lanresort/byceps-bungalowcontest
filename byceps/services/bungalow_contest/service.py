@@ -48,7 +48,7 @@ def find_contest(contest_id: ContestID) -> Optional[Contest]:
 def find_contest_by_party_id(party_id: PartyID) -> Optional[Contest]:
     """Return the contest for that party, if it exists."""
     return Contest.query \
-        .for_party(party_id) \
+        .filter_by(party_id=party_id) \
         .one_or_none()
 
 

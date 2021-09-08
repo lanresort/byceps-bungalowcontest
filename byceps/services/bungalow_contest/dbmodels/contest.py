@@ -8,7 +8,7 @@ byceps.services.bungalow_contest.dbmodels.contest
 
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from ....database import BaseQuery, db, generate_uuid
+from ....database import db, generate_uuid
 from ....typing import PartyID
 from ....util.instances import ReprBuilder
 
@@ -17,16 +17,9 @@ from ...party.dbmodels.party import Party
 from ..transfer.models import Phase
 
 
-class ContestQuery(BaseQuery):
-
-    def for_party(self, party_id):
-        return self.filter_by(party_id=party_id)
-
-
 class Contest(db.Model):
     """A bungalow contest."""
     __tablename__ = 'bungalow_contests'
-    query_class = ContestQuery
 
     id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
     party_id = db.Column(db.UnicodeText, db.ForeignKey('parties.id'), unique=True, index=True, nullable=False)
