@@ -56,7 +56,7 @@ def view(party_id):
         }
 
     juror_ids = {membership.user_id for membership in contest.jury_memberships}
-    jurors = user_service.find_users(juror_ids, include_avatars=True)
+    jurors = user_service.get_users(juror_ids, include_avatars=True)
 
     attributes_ordered = list(sorted(contest.attributes, key=lambda a: a.title))
 

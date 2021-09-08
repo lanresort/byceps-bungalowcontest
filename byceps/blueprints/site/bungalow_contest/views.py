@@ -338,4 +338,4 @@ def _get_occupants(contestant) -> set[User]:
     )
     user_ids = {user_id for seat, user_id in seats_and_user_ids if user_id}
 
-    return user_service.find_users(user_ids)
+    return user_service.get_users(user_ids)
