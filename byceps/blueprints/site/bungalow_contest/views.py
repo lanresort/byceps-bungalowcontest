@@ -6,6 +6,8 @@ byceps.blueprints.site.bungalow_contest.views
 :License: Revised BSD (see `LICENSE` file for details)
 """
 
+from __future__ import annotations
+
 from flask import abort, current_app, g, request
 
 from ....database import db
@@ -23,6 +25,7 @@ from ....services.bungalow_contest import image_service
 from ....services.bungalow_contest import service as bungalow_contest_service
 from ....services.bungalow_contest.transfer.models import Phase
 from ....services.user import service as user_service
+from ....services.user.transfer.models import User
 from ....signals import bungalow_contest as bungalow_contest_signals
 from ....util.framework.blueprint import create_blueprint
 from ....util.framework.flash import flash_error, flash_success
@@ -95,7 +98,7 @@ def view_contestant(id):
     """View a constestant's presentation."""
     contestant = _get_contestant_or_404(id)
 
-    occupants = set(_select_occupants(contestant))
+    occupants = _get_occupants(contestant)
 
     return {
         'contestant': contestant,
@@ -327,8 +330,12 @@ def _get_contestant_or_404(contestant_id):
     return contestant
 
 
-def _select_occupants(contestant):
-    bungalow = contestant.bungalow_occupancy.bungalow
-    for seat in bungalow.seating_area.seats:
-        if seat.has_user:
-            yield seat.user
+def _get_occupants(contestant) -> set[User]:
+    area_id = contestant.bungalow_occupancy.bungalow.seating_area.id
+
+    seats_and_user_ids = bungalow_service.get_seats_and_user_ids_for_areas(
+        {area_id}
+    )
+    user_ids = {user_id for seat, user_id in seats_and_user_ids if user_id}
+
+    return user_service.find_users(user_ids)
