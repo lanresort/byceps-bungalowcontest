@@ -294,11 +294,11 @@ def rate():
     if not value:
         abort(400, 'Missing value.')
 
-    contestant = Contestant.query.get(contestant_id)
+    contestant = db.session.query(Contestant).get(contestant_id)
     if not contestant:
         abort(400, 'Unknown contestant ID.')
 
-    attribute = Attribute.query.get(attribute_id)
+    attribute = db.session.query(Attribute).get(attribute_id)
     if not attribute:
         abort(400, 'Unknown attribute ID.')
 

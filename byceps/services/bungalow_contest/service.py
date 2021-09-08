@@ -42,7 +42,7 @@ def create_contest(party_id: PartyID, attribute_titles: set[str]) -> ContestID:
 
 def find_contest(contest_id: ContestID) -> Optional[Contest]:
     """Return the contest, if it exists."""
-    return Contest.query.get(contest_id)
+    return db.session.query(Contest).get(contest_id)
 
 
 def find_contest_by_party_id(party_id: PartyID) -> Optional[Contest]:
