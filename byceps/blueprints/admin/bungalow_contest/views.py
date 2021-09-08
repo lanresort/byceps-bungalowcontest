@@ -17,13 +17,10 @@ from ....services.bungalow_contest import (
 from ....services.bungalow_contest.transfer.models import Phase
 from ....services.party import service as party_service
 from ....services.user import service as user_service
-from ....util.authorization import register_permission_enum
 from ....util.framework.blueprint import create_blueprint
 from ....util.framework.flash import flash_error, flash_success
 from ....util.framework.templating import templated
 from ....util.views import permission_required, redirect_to, respond_no_content
-
-from .authorization import BungalowContestPermission
 
 
 ATTRIBUTE_TITLES = [
@@ -37,11 +34,8 @@ ATTRIBUTE_TITLES = [
 blueprint = create_blueprint('bungalow_contest_admin', __name__)
 
 
-register_permission_enum(BungalowContestPermission)
-
-
 @blueprint.get('/for_party/<party_id>')
-@permission_required(BungalowContestPermission.view)
+@permission_required('bungalow_contest.view')
 @templated
 def view(party_id):
     """Show an overview of the bungalow contest for that party."""
@@ -78,7 +72,7 @@ def view(party_id):
 
 
 @blueprint.post('/for_party/<party_id>')
-@permission_required(BungalowContestPermission.create)
+@permission_required('bungalow_contest.create')
 def create(party_id):
     """Create a bungalow contest for the party."""
     party = _get_party_or_404(party_id)
@@ -96,7 +90,7 @@ def create(party_id):
 
 
 @blueprint.post('/<contest_id>/phase/<phase_name>')
-@permission_required(BungalowContestPermission.manage)
+@permission_required('bungalow_contest.manage')
 @respond_no_content
 def switch_to_phase(contest_id, phase_name):
     """Switch contest to given phase."""
