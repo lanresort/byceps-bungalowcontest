@@ -135,7 +135,7 @@
 
 {% block scripts %}
     <script>
-      onDomReady(function() {
+      onDomReady(() => {
         post_on_click_then_reload('[data-action="switch-to-phase-not-started"]');
         post_on_click_then_reload('[data-action="switch-to-phase-registration"]');
         post_on_click_then_reload('[data-action="switch-to-phase-rating"]');

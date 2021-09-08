@@ -85,7 +85,7 @@
 
 {% block scripts %}
     <script>
-      onDomReady(function() {
+      onDomReady(() => {
         document.querySelectorAll('.rating')
           .forEach(function(ratingElem) {
             const successIndicator = ratingElem.querySelector('.success');
@@ -111,7 +111,7 @@
                       const radioButton = labelElem.previousElementSibling;
                       radioButton.checked = true;
                       successIndicator.hidden = false;
-                      setTimeout(function() { successIndicator.hidden = true; }, 1000);
+                      setTimeout(() => { successIndicator.hidden = true; }, 1000);
                     });
 
                   event.preventDefault();
