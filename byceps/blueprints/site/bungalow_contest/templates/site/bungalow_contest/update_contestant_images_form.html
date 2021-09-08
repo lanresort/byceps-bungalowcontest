@@ -1,6 +1,6 @@
 {% extends 'layout/base.html' %}
 {% from 'macros/bungalow_contest.html' import render_contestant_images %}
-{% from 'macros/forms.html' import form_buttons, form_field, form_fieldset %}
+{% from 'macros/forms.html' import form_buttons, form_field %}
 {% from 'macros/icons.html' import render_icon %}
 {% set page_title = 'Bungalow-Kandidatur-Bilder verwalten' %}
 
@@ -30,13 +30,11 @@
   <h2>Bild hochladen</h2>
   <form action="{{ url_for('.create_contestant_image', id=contestant.id) }}" method="post" enctype="multipart/form-data">
   {%- if not contestant.image_limit_reached %}
-    {%- call form_fieldset() %}
       <small class="dimmed">
         <p>Es können bis zu {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder hochgeladen werden.</p>
       </small>
-      {{ form_field(form.image, maxlength=500000, accept='image/*', required='required') }}
+      {{ form_field(form.image, maxlength=500000, accept='image/*') }}
       {{ form_field(form.caption, maxlength=200, size=60, note='optional') }}
-    {%- endcall %}
   {%- else %}
     <p>Es wurden bereits {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder für diesen Bungalow hochgeladen. Das muss genügen :)</p>
   {%- endif %}

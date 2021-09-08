@@ -1,5 +1,5 @@
 {% extends 'layout/base.html' %}
-{% from 'macros/forms.html' import form_buttons, form_field, form_fieldset %}
+{% from 'macros/forms.html' import form_buttons, form_field %}
 {% set page_title = 'Bungalow-Kandidatur bearbeiten' %}
 
 {% block head %}
@@ -19,12 +19,12 @@
   <h1>{{ page_title }}</h1>
 
   <form action="{{ url_for('.update_contestant', id=contestant.id) }}" method="post">
-  {%- call form_fieldset() %}
-    {{ form_field(form.description, class='wide', required='required', autofocus='autofocus') }}
-    <small class="dimmed">
-      <p><a href="http://de.wikipedia.org/wiki/BBCode" target="_blank">BBCode</a> wird unterstützt.</p>
-    </small>
-  {%- endcall %}
+  {% with %}
+    {% set note %}
+    <a href="https://de.wikipedia.org/wiki/BBCode" target="_blank">BBCode</a> wird unterstützt.
+    {% endset %}
+    {{ form_field(form.description, autofocus='autofocus', note=note) }}
+  {% endwith %}
 
     {{ form_buttons('Speichern', cancel_url=contestant_view_url) }}
   </form>
