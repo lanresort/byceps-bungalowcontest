@@ -172,7 +172,7 @@ def update_contestant(id):
     form = ContestantUpdateForm(request.form)
 
     if not form.validate():
-        return update_contestant_form(id, erroneous_contestant_form=form)
+        return update_contestant_form(id, erroneous_form=form)
 
     contestant.description = form.description.data.strip()
     db.session.commit()
@@ -213,7 +213,7 @@ def create_contestant_image(id):
     form = ImageCreateForm(request.form)
 
     if not form.validate():
-        return update_contestant_form(id, erroneous_image_form=form)
+        return update_contestant_form(id, erroneous_form=form)
 
     image = request.files.get('image')
     if not image or not image.filename:
