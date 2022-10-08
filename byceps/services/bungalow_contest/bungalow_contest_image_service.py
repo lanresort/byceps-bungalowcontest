@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Optional
 from uuid import UUID
 
-from flask import abort, current_app
+from flask import current_app
 
 from ...database import db
 from ...util.image import create_thumbnail
