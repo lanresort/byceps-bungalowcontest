@@ -8,15 +8,15 @@ byceps.blueprints.admin.bungalow_contest.views
 
 from flask import abort
 
-from ....services.bungalow import service as bungalow_service
+from ....services.bungalow import bungalow_service
 from ....services.bungalow_contest.dbmodels import jury, rating  # Load models.
 from ....services.bungalow_contest import (
     aggregation,
     service as bungalow_contest_service,
 )
 from ....services.bungalow_contest.transfer.models import Phase
-from ....services.party import service as party_service
-from ....services.user import service as user_service
+from ....services.party import party_service
+from ....services.user import user_service
 from ....util.framework.blueprint import create_blueprint
 from ....util.framework.flash import flash_error, flash_success
 from ....util.framework.templating import templated

@@ -12,7 +12,7 @@ from ....database import db, generate_uuid
 from ....typing import UserID
 from ....util.instances import ReprBuilder
 
-from ...user.dbmodels.user import User
+from ...user.dbmodels.user import DbUser
 
 from ..transfer.models import AttributeID, ContestantID
 
@@ -54,7 +54,7 @@ class Rating(db.Model):
     attribute = db.relationship(Attribute)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     creator_id = db.Column(db.Uuid, db.ForeignKey('users.id'), nullable=False)
-    creator = db.relationship(User)
+    creator = db.relationship(DbUser)
     value = db.Column(db.Integer, nullable=False)
 
     def __init__(

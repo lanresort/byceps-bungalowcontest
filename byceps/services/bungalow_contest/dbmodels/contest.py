@@ -12,7 +12,7 @@ from ....database import db, generate_uuid
 from ....typing import PartyID
 from ....util.instances import ReprBuilder
 
-from ...party.dbmodels.party import Party
+from ...party.dbmodels.party import DbParty
 
 from ..transfer.models import Phase
 
@@ -23,7 +23,7 @@ class Contest(db.Model):
 
     id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
     party_id = db.Column(db.UnicodeText, db.ForeignKey('parties.id'), unique=True, index=True, nullable=False)
-    party = db.relationship(Party)
+    party = db.relationship(DbParty)
     _phase = db.Column('phase', db.UnicodeText, nullable=False)
 
     def __init__(self, party_id: PartyID) -> None:

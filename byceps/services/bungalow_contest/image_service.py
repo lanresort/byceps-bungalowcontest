@@ -17,8 +17,8 @@ from ...util.image import create_thumbnail
 from ...util import upload as uploader
 from ...typing import PartyID
 
-from ..image import service as image_service
-from ..image.service import ImageTypeProhibited
+from ..image import image_service
+from ..image.image_service import ImageTypeProhibited
 
 from .dbmodels.contestant import Contestant, Image
 

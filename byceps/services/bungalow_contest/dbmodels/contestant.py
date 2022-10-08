@@ -14,7 +14,7 @@ from ....database import db, generate_uuid
 from ....util.instances import ReprBuilder
 
 from ...bungalow.occupancy.dbmodels.occupancy import (
-    Occupancy as BungalowOccupancy,
+    DbOccupancy as DbBungalowOccupancy,
 )
 
 from ..transfer.models import ContestantID, ContestID
@@ -34,7 +34,7 @@ class Contestant(db.Model):
     contest = db.relationship(Contest, backref='contestants')
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     bungalow_occupancy_id = db.Column(db.Uuid, db.ForeignKey('bungalow_occupancies.id'), unique=True, index=True, nullable=False)
-    bungalow_occupancy = db.relationship(BungalowOccupancy)
+    bungalow_occupancy = db.relationship(DbBungalowOccupancy)
     description = db.Column(db.UnicodeText, nullable=False)
 
     def __init__(

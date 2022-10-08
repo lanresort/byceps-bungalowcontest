@@ -11,10 +11,8 @@ from __future__ import annotations
 from flask import abort, current_app, g, request
 
 from ....database import db
-from ....services.bungalow import service as bungalow_service
-from ....services.bungalow.occupancy import (
-    service as bungalow_occupancy_service,
-)
+from ....services.bungalow import bungalow_service
+from ....services.bungalow.occupancy import bungalow_occupancy_service
 from ....services.bungalow_contest.dbmodels.contestant import (
     Contestant,
     MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT,
@@ -24,7 +22,7 @@ from ....services.bungalow_contest.dbmodels.rating import Attribute
 from ....services.bungalow_contest import image_service
 from ....services.bungalow_contest import service as bungalow_contest_service
 from ....services.bungalow_contest.transfer.models import Phase
-from ....services.user import service as user_service
+from ....services.user import user_service
 from ....services.user.transfer.models import User
 from ....signals import bungalow_contest as bungalow_contest_signals
 from ....util.framework.blueprint import create_blueprint

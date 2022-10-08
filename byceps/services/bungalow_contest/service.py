@@ -13,7 +13,7 @@ from uuid import UUID
 from ...database import db
 from ...typing import PartyID, UserID
 
-from ..user.dbmodels.user import User
+from ..user.dbmodels.user import DbUser
 
 from .dbmodels.contest import Contest
 from .dbmodels.contestant import Contestant
@@ -165,7 +165,7 @@ def get_rating_users_total(contest_id: ContestID) -> int:
     """Return the number of unique users that have rated bungalows in
     this contest.
     """
-    return User.query \
+    return DbUser.query \
         .join(Rating) \
         .join(Contestant) \
         .filter(Contestant.contest_id == contest_id) \
