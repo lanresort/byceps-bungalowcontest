@@ -27,13 +27,25 @@ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT = 5
 
 class DbContestant(db.Model):
     """A bungalow and its occupancy which take part in a contest."""
+
     __tablename__ = 'bungalow_contest_contestants'
 
     id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
-    contest_id = db.Column(db.Uuid, db.ForeignKey('bungalow_contests.id'), index=True, nullable=False)
+    contest_id = db.Column(
+        db.Uuid,
+        db.ForeignKey('bungalow_contests.id'),
+        index=True,
+        nullable=False,
+    )
     contest = db.relationship(DbContest, backref='contestants')
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    bungalow_occupancy_id = db.Column(db.Uuid, db.ForeignKey('bungalow_occupancies.id'), unique=True, index=True, nullable=False)
+    bungalow_occupancy_id = db.Column(
+        db.Uuid,
+        db.ForeignKey('bungalow_occupancies.id'),
+        unique=True,
+        index=True,
+        nullable=False,
+    )
     bungalow_occupancy = db.relationship(DbBungalowOccupancy)
     description = db.Column(db.UnicodeText, nullable=False)
 
@@ -63,10 +75,16 @@ class DbContestant(db.Model):
 
 class DbImage(db.Model):
     """A picture representing the contestant."""
+
     __tablename__ = 'bungalow_contest_images'
 
     id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
-    contestant_id = db.Column(db.Uuid, db.ForeignKey('bungalow_contest_contestants.id'), index=True, nullable=False)
+    contestant_id = db.Column(
+        db.Uuid,
+        db.ForeignKey('bungalow_contest_contestants.id'),
+        index=True,
+        nullable=False,
+    )
     contestant = db.relationship(DbContestant, backref='images')
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     caption = db.Column(db.UnicodeText, nullable=True)

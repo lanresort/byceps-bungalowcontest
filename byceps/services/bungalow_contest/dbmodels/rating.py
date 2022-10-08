@@ -22,10 +22,16 @@ from .contestant import DbContestant
 
 class DbAttribute(db.Model):
     """A bungalow's attribute that can be rated."""
+
     __tablename__ = 'bungalow_contest_attributes'
 
     id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
-    contest_id = db.Column(db.Uuid, db.ForeignKey('bungalow_contests.id'), index=True, nullable=False)
+    contest_id = db.Column(
+        db.Uuid,
+        db.ForeignKey('bungalow_contests.id'),
+        index=True,
+        nullable=False,
+    )
     contest = db.relationship(DbContest, backref='attributes')
     title = db.Column(db.UnicodeText, nullable=False)
 
@@ -42,15 +48,26 @@ class DbAttribute(db.Model):
 
 class DbRating(db.Model):
     """A user's rating of a bungalow's attribute."""
+
     __tablename__ = 'bungalow_contest_ratings'
     __table_args__ = (
         db.UniqueConstraint('contestant_id', 'attribute_id', 'creator_id'),
     )
 
     id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
-    contestant_id = db.Column(db.Uuid, db.ForeignKey('bungalow_contest_contestants.id'), index=True, nullable=False)
+    contestant_id = db.Column(
+        db.Uuid,
+        db.ForeignKey('bungalow_contest_contestants.id'),
+        index=True,
+        nullable=False,
+    )
     contestant = db.relationship(DbContestant, backref='ratings')
-    attribute_id = db.Column(db.Uuid, db.ForeignKey('bungalow_contest_attributes.id'), index=True, nullable=False)
+    attribute_id = db.Column(
+        db.Uuid,
+        db.ForeignKey('bungalow_contest_attributes.id'),
+        index=True,
+        nullable=False,
+    )
     attribute = db.relationship(DbAttribute)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     creator_id = db.Column(db.Uuid, db.ForeignKey('users.id'), nullable=False)

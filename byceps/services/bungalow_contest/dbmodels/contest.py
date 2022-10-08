@@ -19,10 +19,17 @@ from ..transfer.models import Phase
 
 class DbContest(db.Model):
     """A bungalow contest."""
+
     __tablename__ = 'bungalow_contests'
 
     id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
-    party_id = db.Column(db.UnicodeText, db.ForeignKey('parties.id'), unique=True, index=True, nullable=False)
+    party_id = db.Column(
+        db.UnicodeText,
+        db.ForeignKey('parties.id'),
+        unique=True,
+        index=True,
+        nullable=False,
+    )
     party = db.relationship(DbParty)
     _phase = db.Column('phase', db.UnicodeText, nullable=False)
 
