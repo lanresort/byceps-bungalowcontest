@@ -14,10 +14,10 @@
   {%- with bungalow = contestant.bungalow_occupancy.bungalow %}
 
   <div class="row row--space-between">
-    <div class="column-auto">
+    <div>
 {{ render_bungalow_avatar(bungalow, 128) }}
     </div>
-    <div class="column-auto column-auto--grow">
+    <div class="column--grow">
       <nav class="breadcrumbs">
         <ol>
           <li><a href="{{ url_for('.index') }}">Bungalow-Contest</a></li>
@@ -29,7 +29,7 @@
         {{- bungalow.title or '' -}}
       </h1>
     </div>
-    <div class="column-auto">
+    <div>
     {%- if bungalow.is_managed_by(g.user.id) %}
       <div class="button-row button-row--right" style="float: right;">
         <div class="dropdown">

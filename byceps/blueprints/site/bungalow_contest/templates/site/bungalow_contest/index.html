@@ -20,7 +20,7 @@
 
     {%- if not g.user.authenticated %}
 
-  <p>Du musst <a href="{{ url_for('authentication_login.login_form') }}">angemeldet</a> und Verwalter/in eines Bungalows sein um diesen zum Wettbewerb anmelden zu können.</p>
+  <p>Du musst <a href="{{ url_for('authentication_login.log_in_form') }}">angemeldet</a> und Verwalter/in eines Bungalows sein um diesen zum Wettbewerb anmelden zu können.</p>
 
     {%- elif occupancy %}
 
