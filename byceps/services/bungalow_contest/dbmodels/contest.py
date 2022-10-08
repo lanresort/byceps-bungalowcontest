@@ -17,7 +17,7 @@ from ...party.dbmodels.party import DbParty
 from ..transfer.models import Phase
 
 
-class Contest(db.Model):
+class DbContest(db.Model):
     """A bungalow contest."""
     __tablename__ = 'bungalow_contests'
 

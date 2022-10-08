@@ -14,11 +14,11 @@ from ....database import db
 from ....services.bungalow import bungalow_service
 from ....services.bungalow.occupancy import bungalow_occupancy_service
 from ....services.bungalow_contest.dbmodels.contestant import (
-    Contestant,
+    DbContestant,
     MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT,
 )
 from ....services.bungalow_contest.dbmodels import jury  # Load models.
-from ....services.bungalow_contest.dbmodels.rating import Attribute
+from ....services.bungalow_contest.dbmodels.rating import DbAttribute
 from ....services.bungalow_contest import image_service
 from ....services.bungalow_contest import service as bungalow_contest_service
 from ....services.bungalow_contest.transfer.models import Phase
@@ -295,11 +295,11 @@ def rate():
     if not value:
         abort(400, 'Missing value.')
 
-    contestant = db.session.query(Contestant).get(contestant_id)
+    contestant = db.session.query(DbContestant).get(contestant_id)
     if not contestant:
         abort(400, 'Unknown contestant ID.')
 
-    attribute = db.session.query(Attribute).get(attribute_id)
+    attribute = db.session.query(DbAttribute).get(attribute_id)
     if not attribute:
         abort(400, 'Unknown attribute ID.')
 

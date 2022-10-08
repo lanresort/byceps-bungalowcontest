@@ -20,11 +20,11 @@ from ...typing import PartyID
 from ..image import image_service
 from ..image.image_service import ImageTypeProhibited
 
-from .dbmodels.contestant import Contestant, Image
+from .dbmodels.contestant import DbContestant, DbImage
 
 
 def upload(
-    contestant: Contestant,
+    contestant: DbContestant,
     stream,
     allowed_types,
     maximum_dimensions,
@@ -44,7 +44,7 @@ def upload(
     if image_too_large:
         stream = create_thumbnail(stream, type_.name, maximum_dimensions)
 
-    image = Image(contestant.id, caption=caption)
+    image = DbImage(contestant.id, caption=caption)
     db.session.add(image)
     db.session.commit()
 
@@ -61,7 +61,7 @@ def upload(
 
 def delete(image_id: UUID) -> None:
     """Delete the contestant image."""
-    image = db.session.query(Image).get(image_id)
+    image = db.session.query(DbImage).get(image_id)
 
     if image is None:
         raise ValueError('Unknown image ID')

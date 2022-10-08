@@ -9,8 +9,8 @@ byceps.services.bungalow_contest.aggregation
 from __future__ import annotations
 from collections import defaultdict
 
-from .dbmodels.contest import Contest
-from .dbmodels.rating import Attribute, Rating
+from .dbmodels.contest import DbContest
+from .dbmodels.rating import DbAttribute, DbRating
 from .transfer.models import (
     AttributeID,
     AggregatedAttributeRating,
@@ -19,7 +19,7 @@ from .transfer.models import (
 
 
 def aggregate_ratings(
-    contest: Contest,
+    contest: DbContest,
 ) -> dict[ContestantID, dict[AttributeID, AggregatedAttributeRating]]:
     attrs = contest.attributes
     return {
@@ -29,8 +29,8 @@ def aggregate_ratings(
 
 
 def _process_contestant_ratings(
-    attributes: list[Attribute],
-    ratings: list[Rating],
+    attributes: list[DbAttribute],
+    ratings: list[DbRating],
 ) -> dict[AttributeID, AggregatedAttributeRating]:
     aggregated_attr_ratings = {}
 
@@ -47,7 +47,9 @@ def _process_contestant_ratings(
     return aggregated_attr_ratings
 
 
-def _calculate_averages(ratings: list[Rating]) -> dict[AttributeID, list[int]]:
+def _calculate_averages(
+    ratings: list[DbRating],
+) -> dict[AttributeID, list[int]]:
     values_by_attr_id = defaultdict(list)
 
     for rating in ratings:

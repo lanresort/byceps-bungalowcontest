@@ -16,20 +16,20 @@ from ...user.dbmodels.user import DbUser
 
 from ..transfer.models import AttributeID, ContestantID
 
-from .contest import Contest
-from .contestant import Contestant
+from .contest import DbContest
+from .contestant import DbContestant
 
 
-class Attribute(db.Model):
+class DbAttribute(db.Model):
     """A bungalow's attribute that can be rated."""
     __tablename__ = 'bungalow_contest_attributes'
 
     id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
     contest_id = db.Column(db.Uuid, db.ForeignKey('bungalow_contests.id'), index=True, nullable=False)
-    contest = db.relationship(Contest, backref='attributes')
+    contest = db.relationship(DbContest, backref='attributes')
     title = db.Column(db.UnicodeText, nullable=False)
 
-    def __init__(self, contest: Contest, title: str) -> None:
+    def __init__(self, contest: DbContest, title: str) -> None:
         self.contest = contest
         self.title = title
 
@@ -40,7 +40,7 @@ class Attribute(db.Model):
             .build()
 
 
-class Rating(db.Model):
+class DbRating(db.Model):
     """A user's rating of a bungalow's attribute."""
     __tablename__ = 'bungalow_contest_ratings'
     __table_args__ = (
@@ -49,9 +49,9 @@ class Rating(db.Model):
 
     id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
     contestant_id = db.Column(db.Uuid, db.ForeignKey('bungalow_contest_contestants.id'), index=True, nullable=False)
-    contestant = db.relationship(Contestant, backref='ratings')
+    contestant = db.relationship(DbContestant, backref='ratings')
     attribute_id = db.Column(db.Uuid, db.ForeignKey('bungalow_contest_attributes.id'), index=True, nullable=False)
-    attribute = db.relationship(Attribute)
+    attribute = db.relationship(DbAttribute)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     creator_id = db.Column(db.Uuid, db.ForeignKey('users.id'), nullable=False)
     creator = db.relationship(DbUser)
