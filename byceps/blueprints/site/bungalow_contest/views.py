@@ -19,8 +19,10 @@ from ....services.bungalow_contest.dbmodels.contestant import (
 )
 from ....services.bungalow_contest.dbmodels import jury  # Load models.
 from ....services.bungalow_contest.dbmodels.rating import DbAttribute
-from ....services.bungalow_contest import image_service
-from ....services.bungalow_contest import service as bungalow_contest_service
+from ....services.bungalow_contest import (
+    bungalow_contest_image_service,
+    bungalow_contest_service,
+)
 from ....services.bungalow_contest.transfer.models import Phase
 from ....services.user import user_service
 from ....services.user.transfer.models import User
@@ -223,14 +225,14 @@ def create_contestant_image(id):
     caption = form.caption.data.strip()
 
     try:
-        image_service.upload(
+        bungalow_contest_image_service.upload(
             contestant,
             image.stream,
             ALLOWED_IMAGE_TYPES,
             MAXIMUM_DIMENSIONS,
             caption=caption,
         )
-    except image_service.ImageTypeProhibited as e:
+    except bungalow_contest_image_service.ImageTypeProhibited as e:
         abort(400, str(e))
     except FileExistsError:
         abort(409, 'File already exists, not overwriting.')

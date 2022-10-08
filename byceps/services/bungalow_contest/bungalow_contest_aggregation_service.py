@@ -1,6 +1,6 @@
 """
-byceps.services.bungalow_contest.aggregation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+byceps.services.bungalow_contest.bungalow_contest_aggregation_service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Copyright: 2006-2022 Jochen Kupperschmidt
 :License: Revised BSD (see `LICENSE` file for details)

@@ -11,8 +11,8 @@ from flask import abort
 from ....services.bungalow import bungalow_service
 from ....services.bungalow_contest.dbmodels import jury, rating  # Load models.
 from ....services.bungalow_contest import (
-    aggregation,
-    service as bungalow_contest_service,
+    bungalow_contest_aggregation_service,
+    bungalow_contest_service,
 )
 from ....services.bungalow_contest.transfer.models import Phase
 from ....services.party import party_service
@@ -54,7 +54,9 @@ def view(party_id):
 
     attributes_ordered = list(sorted(contest.attributes, key=lambda a: a.title))
 
-    aggregated_ratings = aggregation.aggregate_ratings(contest)
+    aggregated_ratings = bungalow_contest_aggregation_service.aggregate_ratings(
+        contest
+    )
 
     rating_users_total = bungalow_contest_service.get_rating_users_total(
         contest.id
