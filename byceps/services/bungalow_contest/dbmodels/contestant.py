@@ -13,7 +13,7 @@ from uuid import UUID
 from ....database import db, generate_uuid
 from ....util.instances import ReprBuilder
 
-from ...bungalow.occupancy.dbmodels.occupancy import DbBungalowOccupancy
+from ...bungalow.dbmodels.occupancy import DbBungalowOccupancy
 
 from ..transfer.models import ContestantID, ContestID
 

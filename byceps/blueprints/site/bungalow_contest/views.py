@@ -9,8 +9,7 @@ byceps.blueprints.site.bungalow_contest.views
 from flask import abort, current_app, g, request
 
 from ....database import db
-from ....services.bungalow import bungalow_service
-from ....services.bungalow.occupancy import bungalow_occupancy_service
+from ....services.bungalow import bungalow_occupancy_service, bungalow_service
 from ....services.bungalow_contest.dbmodels.contestant import (
     DbContestant,
     MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT,
