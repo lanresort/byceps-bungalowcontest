@@ -10,6 +10,7 @@ from flask import abort, current_app, g, request
 
 from ....database import db
 from ....services.bungalow import bungalow_occupancy_service, bungalow_service
+from ....services.bungalow_contest.dbmodels.contest import DbContest
 from ....services.bungalow_contest.dbmodels.contestant import (
     DbContestant,
     MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT,
@@ -20,7 +21,7 @@ from ....services.bungalow_contest import (
     bungalow_contest_image_service,
     bungalow_contest_service,
 )
-from ....services.bungalow_contest.transfer.models import Phase
+from ....services.bungalow_contest.transfer.models import ContestantID, Phase
 from ....services.user import user_service
 from ....services.user.transfer.models import User
 from ....signals import bungalow_contest as bungalow_contest_signals
@@ -307,7 +308,7 @@ def rate():
     )
 
 
-def _get_contest_or_404():
+def _get_contest_or_404() -> DbContest:
     contest = bungalow_contest_service.find_contest_by_party_id(g.party_id)
 
     if contest is None:
@@ -316,7 +317,7 @@ def _get_contest_or_404():
     return contest
 
 
-def _get_contestant_or_404(contestant_id):
+def _get_contestant_or_404(contestant_id: ContestantID) -> DbContestant:
     contestant = bungalow_contest_service.find_contestant(
         g.party_id, contestant_id
     )
@@ -327,7 +328,7 @@ def _get_contestant_or_404(contestant_id):
     return contestant
 
 
-def _get_occupants(contestant) -> set[User]:
+def _get_occupants(contestant: DbContestant) -> set[User]:
     area_id = contestant.bungalow_occupancy.bungalow.seating_area.id
 
     seats_and_user_ids = bungalow_service.get_seats_and_user_ids_for_areas(
