@@ -63,7 +63,7 @@ def upload(
 
 def delete(image_id: UUID) -> None:
     """Delete the contestant image."""
-    db_image = db.session.query(DbImage).get(image_id)
+    db_image = db.session.get(DbImage, image_id)
 
     if db_image is None:
         raise ValueError('Unknown image ID')

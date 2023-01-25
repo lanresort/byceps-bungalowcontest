@@ -9,6 +9,8 @@ byceps.services.bungalow_contest.bungalow_contest_service
 from typing import Optional
 from uuid import UUID
 
+from sqlalchemy import select
+
 from ...database import db
 from ...typing import PartyID, UserID
 
@@ -41,14 +43,14 @@ def create_contest(party_id: PartyID, attribute_titles: set[str]) -> ContestID:
 
 def find_contest(contest_id: ContestID) -> Optional[DbContest]:
     """Return the contest, if it exists."""
-    return db.session.query(DbContest).get(contest_id)
+    return db.session.get(DbContest, contest_id)
 
 
 def find_contest_by_party_id(party_id: PartyID) -> Optional[DbContest]:
     """Return the contest for that party, if it exists."""
-    return DbContest.query \
-        .filter_by(party_id=party_id) \
-        .one_or_none()
+    return db.session.execute(
+        select(DbContest).filter_by(party_id=party_id)
+    ).scalar_one_or_none()
 
 
 def switch_contest_to_phase(contest_id: ContestID, phase: Phase) -> None:
@@ -74,27 +76,32 @@ def find_contestant(
     contestant is not returned if it doesn't belong to the current
     site's party.
     """
-    return DbContestant.query \
-        .join(DbContest) \
-        .filter(DbContest.party_id == party_id) \
-        .filter(DbContestant.id == contestant_id) \
-        .one_or_none()
+    return db.session.execute(
+        select(DbContestant)
+        .join(DbContest)
+        .filter(DbContest.party_id == party_id)
+        .filter(DbContestant.id == contestant_id)
+    ).scalar_one_or_none()
 
 
 def find_contestant_for_bungalow(
     bungalow_occupancy_id: UUID,
 ) -> Optional[DbContestant]:
     """Return the registration of the bungalow for the contest, if it exists."""
-    return DbContestant.query \
-        .filter_by(bungalow_occupancy_id=bungalow_occupancy_id) \
-        .one_or_none()
+    return db.session.execute(
+        select(DbContestant).filter_by(
+            bungalow_occupancy_id=bungalow_occupancy_id
+        )
+    ).scalar_one_or_none()
 
 
 def is_bungalow_contestant(bungalow_occupancy_id: UUID) -> bool:
     """Return `True` if the bungalow is registered for the contest."""
-    count = DbContestant.query \
-        .filter_by(bungalow_occupancy_id=bungalow_occupancy_id) \
-        .count()
+    count = db.session.scalar(
+        select(db.func.count(DbContestant.id)).filter_by(
+            bungalow_occupancy_id=bungalow_occupancy_id
+        )
+    )
     return count > 0
 
 
@@ -133,11 +140,12 @@ def rate(
     value: int,
 ) -> None:
     """Create or update a user's rating for a bungalow's attribute."""
-    db_rating = DbRating.query \
-        .filter_by(contestant_id=contestant_id) \
-        .filter_by(attribute_id=attribute_id) \
-        .filter_by(creator_id=creator_id) \
-        .one_or_none()
+    db_rating = db.session.execute(
+        select(DbRating)
+        .filter_by(contestant_id=contestant_id)
+        .filter_by(attribute_id=attribute_id)
+        .filter_by(creator_id=creator_id)
+    ).scalar_one_or_none()
 
     if db_rating:
         db_rating.value = value
@@ -152,10 +160,11 @@ def get_ratings_by_user(
     user_id: UserID, contestant_id: ContestantID
 ) -> dict[UUID, DbRating]:
     """Return the user's ratings for that contestant, indexed by attribute."""
-    db_ratings = DbRating.query \
-        .filter_by(contestant_id=contestant_id) \
-        .filter_by(creator_id=user_id) \
-        .all()
+    db_ratings = db.session.scalars(
+        select(DbRating)
+        .filter_by(contestant_id=contestant_id)
+        .filter_by(creator_id=user_id)
+    ).all()
 
     return {db_rating.attribute_id: db_rating for db_rating in db_ratings}
 
@@ -164,9 +173,10 @@ def get_rating_users_total(contest_id: ContestID) -> int:
     """Return the number of unique users that have rated bungalows in
     this contest.
     """
-    return DbUser.query \
-        .join(DbRating) \
-        .join(DbContestant) \
-        .filter(DbContestant.contest_id == contest_id) \
-        .distinct() \
-        .count()
+    return db.session.scalar(
+        select(db.func.count(DbUser.id))
+        .join(DbRating)
+        .join(DbContestant)
+        .filter(DbContestant.contest_id == contest_id)
+        .distinct()
+    )
