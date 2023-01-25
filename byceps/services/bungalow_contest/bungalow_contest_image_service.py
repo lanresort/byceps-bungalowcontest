@@ -18,7 +18,9 @@ from ...util import upload as uploader
 from ...typing import PartyID
 
 from ..image import image_service
-from ..image.image_service import ImageTypeProhibited
+from ..image.image_service import (
+    ImageTypeProhibited,  # noqa: F401
+)  # Provide to view functions.
 
 from .dbmodels.contestant import DbContestant, DbImage
 
