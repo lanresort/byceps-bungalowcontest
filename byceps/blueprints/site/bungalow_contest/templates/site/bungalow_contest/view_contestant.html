@@ -11,7 +11,7 @@
 
 {% block body %}
 
-  {%- with bungalow = contestant.bungalow_occupancy.bungalow %}
+  {%- with bungalow = occupancy.bungalow %}
 
   <div class="row row--space-between">
     <div>
@@ -26,11 +26,11 @@
       </nav>
       <h1>
         {%- filter dim %}Bungalow {{ bungalow.number }}{% endfilter %}<br>
-        {{- bungalow.title or '' -}}
+        {{- occupancy.title or '' -}}
       </h1>
     </div>
     <div>
-    {%- if bungalow.is_managed_by(g.user.id) %}
+    {%- if occupancy.is_managed_by(g.user.id) %}
       <div class="button-row button-row--right" style="float: right;">
         <div class="dropdown">
           <button class="dropdown-toggle button"><span>Aktionen</span> {{ render_icon('caret-down') }}</button>

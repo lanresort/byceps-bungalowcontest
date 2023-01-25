@@ -102,6 +102,7 @@ def view_contestant(id):
 
     return {
         'contestant': contestant,
+        'occupancy': db_occupancy,
         'occupants': occupants,
     }
 
