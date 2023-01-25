@@ -46,8 +46,8 @@ def upload(
     if image_too_large:
         stream = create_thumbnail(stream, type_.name, maximum_dimensions)
 
-    image = DbImage(contestant.id, caption=caption)
-    db.session.add(image)
+    db_image = DbImage(contestant.id, caption=caption)
+    db.session.add(db_image)
     db.session.commit()
 
     images_path = _get_images_path(contestant.contest.party_id)
@@ -55,7 +55,7 @@ def upload(
     # Create path if it doesn't exist.
     images_path.mkdir(exist_ok=True)
 
-    target_filename = images_path / image.filename
+    target_filename = images_path / db_image.filename
 
     # Might raise `FileExistsError`.
     uploader.store(stream, target_filename)
@@ -63,18 +63,18 @@ def upload(
 
 def delete(image_id: UUID) -> None:
     """Delete the contestant image."""
-    image = db.session.query(DbImage).get(image_id)
+    db_image = db.session.query(DbImage).get(image_id)
 
-    if image is None:
+    if db_image is None:
         raise ValueError('Unknown image ID')
 
     # Delete file.
-    images_path = _get_images_path(image.contestant.contest.party_id)
-    image_path = images_path / image.filename
+    images_path = _get_images_path(db_image.contestant.contest.party_id)
+    image_path = images_path / db_image.filename
     uploader.delete(image_path)
 
     # Delete database record.
-    db.session.delete(image)
+    db.session.delete(db_image)
     db.session.commit()
 
 

@@ -27,16 +27,16 @@ from .models import AttributeID, ContestantID, ContestID, Phase
 
 def create_contest(party_id: PartyID, attribute_titles: set[str]) -> ContestID:
     """Create a contest for that party."""
-    contest = DbContest(party_id)
-    db.session.add(contest)
+    db_contest = DbContest(party_id)
+    db.session.add(db_contest)
 
     for title in attribute_titles:
-        attribute = DbAttribute(contest, title)
-        db.session.add(attribute)
+        db_attribute = DbAttribute(db_contest, title)
+        db.session.add(db_attribute)
 
     db.session.commit()
 
-    return contest.id
+    return db_contest.id
 
 
 def find_contest(contest_id: ContestID) -> Optional[DbContest]:
@@ -53,11 +53,11 @@ def find_contest_by_party_id(party_id: PartyID) -> Optional[DbContest]:
 
 def switch_contest_to_phase(contest_id: ContestID, phase: Phase) -> None:
     """Switch the contest to that phase."""
-    contest = find_contest(contest_id)
-    if contest is None:
+    db_contest = find_contest(contest_id)
+    if db_contest is None:
         raise ValueError('Unknown contest ID')
 
-    contest.phase = phase
+    db_contest.phase = phase
     db.session.commit()
 
 
@@ -102,12 +102,12 @@ def register_contestant(
     contest_id: ContestID, bungalow_occupancy_id: UUID, description: str
 ) -> DbContestant:
     """Register a bungalow as a contestant for a party."""
-    contestant = DbContestant(contest_id, bungalow_occupancy_id, description)
+    db_contestant = DbContestant(contest_id, bungalow_occupancy_id, description)
 
-    db.session.add(contestant)
+    db.session.add(db_contestant)
     db.session.commit()
 
-    return contestant
+    return db_contestant
 
 
 # -------------------------------------------------------------------- #
@@ -116,9 +116,9 @@ def register_contestant(
 
 def appoint_juror(user_id: UserID, contest_id: ContestID) -> None:
     """Appoint the user as a juror for that contest."""
-    jury_membership = DbJuryMembership(contest_id, user_id)
+    db_jury_membership = DbJuryMembership(contest_id, user_id)
 
-    db.session.add(jury_membership)
+    db.session.add(db_jury_membership)
     db.session.commit()
 
 
@@ -133,17 +133,17 @@ def rate(
     value: int,
 ) -> None:
     """Create or update a user's rating for a bungalow's attribute."""
-    rating = DbRating.query \
+    db_rating = DbRating.query \
         .filter_by(contestant_id=contestant_id) \
         .filter_by(attribute_id=attribute_id) \
         .filter_by(creator_id=creator_id) \
         .one_or_none()
 
-    if rating:
-        rating.value = value
+    if db_rating:
+        db_rating.value = value
     else:
-        rating = DbRating(contestant_id, attribute_id, creator_id, value)
-        db.session.add(rating)
+        db_rating = DbRating(contestant_id, attribute_id, creator_id, value)
+        db.session.add(db_rating)
 
     db.session.commit()
 
@@ -152,12 +152,12 @@ def get_ratings_by_user(
     user_id: UserID, contestant_id: ContestantID
 ) -> dict[UUID, DbRating]:
     """Return the user's ratings for that contestant, indexed by attribute."""
-    ratings = DbRating.query \
+    db_ratings = DbRating.query \
         .filter_by(contestant_id=contestant_id) \
         .filter_by(creator_id=user_id) \
         .all()
 
-    return {r.attribute_id: r for r in ratings}
+    return {db_rating.attribute_id: db_rating for db_rating in db_ratings}
 
 
 def get_rating_users_total(contest_id: ContestID) -> int:

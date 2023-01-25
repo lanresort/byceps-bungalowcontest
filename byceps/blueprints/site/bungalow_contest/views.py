@@ -328,8 +328,8 @@ def _get_contestant_or_404(contestant_id: ContestantID) -> DbContestant:
     return contestant
 
 
-def _get_occupants(contestant: DbContestant) -> set[User]:
-    area_id = contestant.bungalow_occupancy.bungalow.seating_area.id
+def _get_occupants(db_contestant: DbContestant) -> set[User]:
+    area_id = db_contestant.bungalow_occupancy.bungalow.seating_area.id
 
     seats_and_user_ids = bungalow_service.get_seats_and_user_ids_for_areas(
         {area_id}
