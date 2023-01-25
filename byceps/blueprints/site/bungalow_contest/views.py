@@ -6,7 +6,7 @@ byceps.blueprints.site.bungalow_contest.views
 :License: Revised BSD (see `LICENSE` file for details)
 """
 
-from flask import abort, current_app, g, request
+from flask import abort, g, request
 
 from ....database import db
 from ....services.bungalow import bungalow_occupancy_service, bungalow_service
@@ -22,8 +22,8 @@ from ....services.bungalow_contest import (
     bungalow_contest_service,
 )
 from ....services.bungalow_contest.models import ContestantID, Phase
+from ....services.user.models.user import User
 from ....services.user import user_service
-from ....services.user.transfer.models import User
 from ....signals import bungalow_contest as bungalow_contest_signals
 from ....util.framework.blueprint import create_blueprint
 from ....util.framework.flash import flash_error, flash_success
