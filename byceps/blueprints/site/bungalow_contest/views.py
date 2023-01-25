@@ -10,6 +10,7 @@ from flask import abort, g, request
 
 from ....database import db
 from ....services.bungalow import bungalow_occupancy_service, bungalow_service
+from ....services.bungalow.dbmodels.occupancy import DbBungalowOccupancy
 from ....services.bungalow_contest.dbmodels.contest import DbContest
 from ....services.bungalow_contest.dbmodels.contestant import (
     DbContestant,
@@ -96,7 +97,8 @@ def view_contestant(id):
     """View a constestant's presentation."""
     contestant = _get_contestant_or_404(id)
 
-    occupants = _get_occupants(contestant)
+    db_occupancy = contestant.bungalow_occupancy
+    occupants = _get_occupants(db_occupancy)
 
     return {
         'contestant': contestant,
@@ -328,12 +330,11 @@ def _get_contestant_or_404(contestant_id: ContestantID) -> DbContestant:
     return contestant
 
 
-def _get_occupants(db_contestant: DbContestant) -> set[User]:
-    area_id = db_contestant.bungalow_occupancy.bungalow.seating_area.id
-
-    seats_and_user_ids = bungalow_service.get_seats_and_user_ids_for_areas(
-        {area_id}
+def _get_occupants(db_occupancy: DbBungalowOccupancy) -> list[User]:
+    occupant_slots = (
+        bungalow_occupancy_service.get_occupant_slots_for_occupancy(
+            db_occupancy.id
+        )
     )
-    user_ids = {user_id for seat, user_id in seats_and_user_ids if user_id}
 
-    return user_service.get_users(user_ids)
+    return [slot.occupant for slot in occupant_slots if slot.occupant]

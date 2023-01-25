@@ -25,7 +25,7 @@
 
 
 {% macro render_contestant_occupants(occupants) -%}
-  {%- for occupant in occupants|sort(attribute='screen_name') %}
+  {%- for occupant in occupants %}
   {%- if not loop.last %}{% if not loop.first %}, {% endif %}{% elif loop.length > 1 %} und {% endif %}
     {{- render_user_link(occupant) -}}
   {%- endfor %}
