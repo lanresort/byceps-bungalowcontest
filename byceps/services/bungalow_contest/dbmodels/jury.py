@@ -31,7 +31,9 @@ class DbJuryMembership(db.Model):
         self.user_id = user_id
 
     def __repr__(self) -> str:
-        return ReprBuilder(self) \
-            .add('contest', self.contest.party.title) \
-            .add('user_id', self.user_id) \
+        return (
+            ReprBuilder(self)
+            .add('contest', self.contest.party.title)
+            .add('user_id', self.user_id)
             .build()
+        )

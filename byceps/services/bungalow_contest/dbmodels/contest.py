@@ -47,6 +47,4 @@ class DbContest(db.Model):
         self._phase = phase.name
 
     def __repr__(self) -> str:
-        return ReprBuilder(self) \
-            .add('party', self.party_id) \
-            .build()
+        return ReprBuilder(self).add('party', self.party_id).build()

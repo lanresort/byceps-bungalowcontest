@@ -40,10 +40,12 @@ class DbAttribute(db.Model):
         self.title = title
 
     def __repr__(self) -> str:
-        return ReprBuilder(self) \
-            .add('party', self.contest.party_id) \
-            .add('title', self.title) \
+        return (
+            ReprBuilder(self)
+            .add('party', self.contest.party_id)
+            .add('title', self.title)
             .build()
+        )
 
 
 class DbRating(db.Model):

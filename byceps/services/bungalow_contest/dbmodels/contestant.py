@@ -65,10 +65,12 @@ class DbContestant(db.Model):
         return len(self.images) >= MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT
 
     def __repr__(self) -> str:
-        return ReprBuilder(self) \
-            .add('party', self.contest.party_id) \
-            .add('bungalow', self.bungalow_occupancy.bungalow.number) \
+        return (
+            ReprBuilder(self)
+            .add('party', self.contest.party_id)
+            .add('bungalow', self.bungalow_occupancy.bungalow.number)
             .build()
+        )
 
 
 class DbImage(db.Model):
