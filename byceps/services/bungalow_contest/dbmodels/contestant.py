@@ -15,7 +15,7 @@ from ....util.instances import ReprBuilder
 
 from ...bungalow.dbmodels.occupancy import DbBungalowOccupancy
 
-from ..transfer.models import ContestantID, ContestID
+from ..models import ContestantID, ContestID
 
 from .contest import DbContest
 

@@ -10,7 +10,7 @@ from ....database import db
 from ....typing import UserID
 from ....util.instances import ReprBuilder
 
-from ..transfer.models import ContestID
+from ..models import ContestID
 
 from .contest import DbContest
 

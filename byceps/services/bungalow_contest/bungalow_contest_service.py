@@ -18,7 +18,7 @@ from .dbmodels.contest import DbContest
 from .dbmodels.contestant import DbContestant
 from .dbmodels.jury import DbJuryMembership
 from .dbmodels.rating import DbAttribute, DbRating
-from .transfer.models import AttributeID, ContestantID, ContestID, Phase
+from .models import AttributeID, ContestantID, ContestID, Phase
 
 
 # -------------------------------------------------------------------- #

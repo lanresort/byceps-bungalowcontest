@@ -14,7 +14,7 @@ from ....util.instances import ReprBuilder
 
 from ...party.dbmodels.party import DbParty
 
-from ..transfer.models import Phase
+from ..models import Phase
 
 
 class DbContest(db.Model):

@@ -14,7 +14,7 @@ from ....services.bungalow_contest import (
     bungalow_contest_aggregation_service,
     bungalow_contest_service,
 )
-from ....services.bungalow_contest.transfer.models import Phase
+from ....services.bungalow_contest.models import Phase
 from ....services.party import party_service
 from ....services.user import user_service
 from ....util.framework.blueprint import create_blueprint

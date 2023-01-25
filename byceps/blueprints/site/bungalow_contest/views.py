@@ -21,7 +21,7 @@ from ....services.bungalow_contest import (
     bungalow_contest_image_service,
     bungalow_contest_service,
 )
-from ....services.bungalow_contest.transfer.models import ContestantID, Phase
+from ....services.bungalow_contest.models import ContestantID, Phase
 from ....services.user import user_service
 from ....services.user.transfer.models import User
 from ....signals import bungalow_contest as bungalow_contest_signals

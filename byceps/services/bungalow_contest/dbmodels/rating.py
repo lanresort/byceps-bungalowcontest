@@ -14,7 +14,7 @@ from ....util.instances import ReprBuilder
 
 from ...user.dbmodels.user import DbUser
 
-from ..transfer.models import AttributeID, ContestantID
+from ..models import AttributeID, ContestantID
 
 from .contest import DbContest
 from .contestant import DbContestant
