@@ -69,8 +69,17 @@ The integrated admin UI for a bungalow contest looks like this:
    :width: 800
 
 
+Author
+======
+
+The bungalow contest system was created, and is developed and
+maintained, by Jochen Kupperschmidt.
+
+
 License
 =======
 
-The code is licensed under the terms of the Revised BSD license (see
-``LICENSE`` file for details).
+The bungalow contest system is licensed under the `BSD 3-Clause "New" or
+"Revised" License <https://choosealicense.com/licenses/bsd-3-clause/>`_.
+
+The license text is provided in the `LICENSE <LICENSE>`_ file.
