@@ -119,7 +119,7 @@ def register():
 
     if (occupancy is None) or not occupancy.is_managed_by(g.user.id):
         flash_error(
-            'Nur der/die Bungalowverwalter/in '
+            'Nur der/die Verwalter/in des Bungalows '
             'kann einen Bungalow zum Wettbewerb anmelden.'
         )
         return redirect_to('.index')
