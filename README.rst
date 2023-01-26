@@ -11,22 +11,24 @@ platform to provide a user frontend to register and vote for bungalows
 as well as an admin UI to manage the contest and see the partially
 aggregated ratings.
 
-The implementation depends on the actual bungalow system (specifically,
-the "bungalow occupation" entity, which is the information that a
-bungalow is occupied and by which users), but that has not been
-open-sourced (at this point), though.
+The implementation depends on the actual `bungalows system`_
+(specifically, the "bungalow occupation" entity, which is the
+information that a bungalow is occupied and by which users) that has
+been open-sourced in 2023.
 
 **However**, it should be easy to make the contest system independent of
-the bungalow system by cutting out the connection to the bungalow
+the bungalows system by cutting out the connection to the bungalow
 occupation.
 
 There can be one contest per party.
 
 While the contest system does not work independently right out of the
-box, it serves an example of how an extension to BYCEPS can look like.
+box, it serves as an example of how an extension to BYCEPS can look
+like.
 
 .. _LANresort: https://www.lanresort.de/
 .. _BYCEPS: https://byceps.nwsnet.de/
+.. _bungalows system: https://github.com/lanresort/byceps-bungalows
 
 
 Installation
