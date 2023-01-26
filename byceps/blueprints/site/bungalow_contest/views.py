@@ -117,7 +117,7 @@ def register():
         g.party_id, g.user.id
     )
 
-    if (occupancy is None) or not occupancy.is_managed_by(g.user.id):
+    if (occupancy is None) or occupancy.manager_id != g.user.id:
         flash_error(
             'Nur der/die Verwalter/in des Bungalows '
             'kann einen Bungalow zum Wettbewerb anmelden.'
