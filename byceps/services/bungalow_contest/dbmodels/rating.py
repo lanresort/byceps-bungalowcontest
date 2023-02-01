@@ -8,7 +8,7 @@ byceps.services.bungalow_contest.dbmodels.rating
 
 from datetime import datetime
 
-from ....database import db, generate_uuid
+from ....database import db, generate_uuid7
 from ....typing import UserID
 from ....util.instances import ReprBuilder
 
@@ -25,7 +25,7 @@ class DbAttribute(db.Model):
 
     __tablename__ = 'bungalow_contest_attributes'
 
-    id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
+    id = db.Column(db.Uuid, default=generate_uuid7, primary_key=True)
     contest_id = db.Column(
         db.Uuid,
         db.ForeignKey('bungalow_contests.id'),
@@ -56,7 +56,7 @@ class DbRating(db.Model):
         db.UniqueConstraint('contestant_id', 'attribute_id', 'creator_id'),
     )
 
-    id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
+    id = db.Column(db.Uuid, default=generate_uuid7, primary_key=True)
     contestant_id = db.Column(
         db.Uuid,
         db.ForeignKey('bungalow_contest_contestants.id'),

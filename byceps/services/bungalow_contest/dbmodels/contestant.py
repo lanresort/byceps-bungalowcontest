@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from ....database import db, generate_uuid
+from ....database import db, generate_uuid7
 from ....util.instances import ReprBuilder
 
 from ...bungalow.dbmodels.occupancy import DbBungalowOccupancy
@@ -28,7 +28,7 @@ class DbContestant(db.Model):
 
     __tablename__ = 'bungalow_contest_contestants'
 
-    id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
+    id = db.Column(db.Uuid, default=generate_uuid7, primary_key=True)
     contest_id = db.Column(
         db.Uuid,
         db.ForeignKey('bungalow_contests.id'),
@@ -78,7 +78,7 @@ class DbImage(db.Model):
 
     __tablename__ = 'bungalow_contest_images'
 
-    id = db.Column(db.Uuid, default=generate_uuid, primary_key=True)
+    id = db.Column(db.Uuid, default=generate_uuid7, primary_key=True)
     contestant_id = db.Column(
         db.Uuid,
         db.ForeignKey('bungalow_contest_contestants.id'),
