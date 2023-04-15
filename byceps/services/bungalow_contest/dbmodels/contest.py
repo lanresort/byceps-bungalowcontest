@@ -6,7 +6,12 @@ byceps.services.bungalow_contest.dbmodels.contest
 :License: Revised BSD (see `LICENSE` file for details)
 """
 
-from sqlalchemy.ext.hybrid import hybrid_property
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    hybrid_property = property
+else:
+    from sqlalchemy.ext.hybrid import hybrid_property
 
 from ....database import db, generate_uuid4
 from ....typing import PartyID
