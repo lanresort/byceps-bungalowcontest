@@ -6,7 +6,8 @@ byceps.services.bungalow_contest.bungalow_contest_service
 :License: Revised BSD (see `LICENSE` file for details)
 """
 
-from typing import Optional
+from __future__ import annotations
+
 from uuid import UUID
 
 from sqlalchemy import select
@@ -40,12 +41,12 @@ def create_contest(party_id: PartyID, attribute_titles: set[str]) -> ContestID:
     return db_contest.id
 
 
-def find_contest(contest_id: ContestID) -> Optional[DbContest]:
+def find_contest(contest_id: ContestID) -> DbContest | None:
     """Return the contest, if it exists."""
     return db.session.get(DbContest, contest_id)
 
 
-def find_contest_by_party_id(party_id: PartyID) -> Optional[DbContest]:
+def find_contest_by_party_id(party_id: PartyID) -> DbContest | None:
     """Return the contest for that party, if it exists."""
     return db.session.execute(
         select(DbContest).filter_by(party_id=party_id)
@@ -68,7 +69,7 @@ def switch_contest_to_phase(contest_id: ContestID, phase: Phase) -> None:
 
 def find_contestant(
     party_id: PartyID, contestant_id: ContestantID
-) -> Optional[DbContestant]:
+) -> DbContestant | None:
     """Return the contestant with that ID, if it exists.
 
     The party ID is checked as an additional measure so that a
@@ -85,7 +86,7 @@ def find_contestant(
 
 def find_contestant_for_bungalow(
     bungalow_occupancy_id: UUID,
-) -> Optional[DbContestant]:
+) -> DbContestant | None:
     """Return the registration of the bungalow for the contest, if it exists."""
     return db.session.execute(
         select(DbContestant).filter_by(

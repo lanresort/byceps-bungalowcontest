@@ -6,8 +6,9 @@ byceps.services.bungalow_contest.bungalow_contest_image_service
 :License: Revised BSD (see `LICENSE` file for details)
 """
 
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Optional
 from uuid import UUID
 
 from flask import current_app
@@ -30,7 +31,7 @@ def upload(
     allowed_types,
     maximum_dimensions,
     *,
-    caption: Optional[str] = None,
+    caption: str | None = None,
 ) -> None:
     """Upload a contestant image.
 
