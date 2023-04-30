@@ -15,12 +15,10 @@ from flask import current_app
 
 from byceps.database import db
 from byceps.services.image import image_service
-from byceps.services.image.image_service import (
-    ImageTypeProhibited,  # Provide to view functions.  # noqa: F401
-)
 from byceps.typing import PartyID
 from byceps.util import upload as uploader
 from byceps.util.image import create_thumbnail
+from byceps.util.result import Err, Ok, Result
 
 from .dbmodels.contestant import DbContestant, DbImage
 
@@ -32,13 +30,15 @@ def upload(
     maximum_dimensions,
     *,
     caption: str | None = None,
-) -> None:
-    """Upload a contestant image.
+) -> Result[None, str]:
+    """Upload a contestant image."""
+    image_type_result = image_service.determine_image_type(
+        stream, allowed_types
+    )
+    if image_type_result.is_err():
+        return Err(image_type_result.unwrap_err())
 
-    Raise `ImageTypeProhibited` if the stream data is not of one the
-    allowed types.
-    """
-    type_ = image_service.determine_image_type(stream, allowed_types)
+    type_ = image_type_result.unwrap()
     dimensions = image_service.determine_dimensions(stream)
 
     # Resize if too large.
@@ -59,6 +59,8 @@ def upload(
 
     # Might raise `FileExistsError`.
     uploader.store(stream, target_filename)
+
+    return Ok(None)
 
 
 def delete(image_id: UUID) -> None:

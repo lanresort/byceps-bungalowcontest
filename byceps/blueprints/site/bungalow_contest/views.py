@@ -232,15 +232,15 @@ def create_contestant_image(id):
     caption = form.caption.data.strip()
 
     try:
-        bungalow_contest_image_service.upload(
+        upload_result = bungalow_contest_image_service.upload(
             contestant,
             image.stream,
             ALLOWED_IMAGE_TYPES,
             MAXIMUM_DIMENSIONS,
             caption=caption,
         )
-    except bungalow_contest_image_service.ImageTypeProhibited as e:
-        abort(400, str(e))
+        if upload_result.is_err():
+            abort(400, upload_result.unwrap_err())
     except FileExistsError:
         abort(409, 'File already exists, not overwriting.')
 
