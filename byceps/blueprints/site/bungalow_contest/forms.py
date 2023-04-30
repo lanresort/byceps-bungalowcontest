@@ -9,7 +9,7 @@ byceps.blueprints.site.bungalow_contest.forms
 from wtforms import FileField, StringField, TextAreaField
 from wtforms.validators import InputRequired, Length, Optional
 
-from ....util.l10n import LocalizedForm
+from byceps.util.l10n import LocalizedForm
 
 
 class ContestantUpdateForm(LocalizedForm):

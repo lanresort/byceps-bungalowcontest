@@ -8,29 +8,35 @@ byceps.blueprints.site.bungalow_contest.views
 
 from flask import abort, g, request
 
-from ....database import db
-from ....services.bungalow import bungalow_occupancy_service, bungalow_service
-from ....services.bungalow.dbmodels.occupancy import DbBungalowOccupancy
-from ....services.bungalow_contest.dbmodels.contest import DbContest
-from ....services.bungalow_contest.dbmodels.contestant import (
-    DbContestant,
-    MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT,
+from byceps.database import db
+from byceps.services.bungalow import (
+    bungalow_occupancy_service,
+    bungalow_service,
 )
-from ....services.bungalow_contest.dbmodels import jury  # Load models.
-from ....services.bungalow_contest.dbmodels.rating import DbAttribute
-from ....services.bungalow_contest import (
+from byceps.services.bungalow.dbmodels.occupancy import DbBungalowOccupancy
+from byceps.services.bungalow_contest import (
     bungalow_contest_image_service,
     bungalow_contest_service,
 )
-from ....services.bungalow_contest.models import ContestantID, Phase
-from ....services.user.models.user import User
-from ....services.user import user_service
-from ....signals import bungalow_contest as bungalow_contest_signals
-from ....util.framework.blueprint import create_blueprint
-from ....util.framework.flash import flash_error, flash_success
-from ....util.image.models import Dimensions, ImageType
-from ....util.framework.templating import templated
-from ....util.views import login_required, redirect_to, respond_no_content
+from byceps.services.bungalow_contest.dbmodels import (
+    # Load models.
+    jury,  # noqa: F401
+)
+from byceps.services.bungalow_contest.dbmodels.contest import DbContest
+from byceps.services.bungalow_contest.dbmodels.contestant import (
+    DbContestant,
+    MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT,
+)
+from byceps.services.bungalow_contest.dbmodels.rating import DbAttribute
+from byceps.services.bungalow_contest.models import ContestantID, Phase
+from byceps.services.user import user_service
+from byceps.services.user.models.user import User
+from byceps.signals import bungalow_contest as bungalow_contest_signals
+from byceps.util.framework.blueprint import create_blueprint
+from byceps.util.framework.flash import flash_error, flash_success
+from byceps.util.framework.templating import templated
+from byceps.util.image.models import Dimensions, ImageType
+from byceps.util.views import login_required, redirect_to, respond_no_content
 
 from .forms import ContestantUpdateForm, ImageCreateForm
 

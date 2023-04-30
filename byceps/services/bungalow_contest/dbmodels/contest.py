@@ -8,18 +8,17 @@ byceps.services.bungalow_contest.dbmodels.contest
 
 from typing import TYPE_CHECKING
 
+
 if TYPE_CHECKING:
     hybrid_property = property
 else:
     from sqlalchemy.ext.hybrid import hybrid_property
 
-from ....database import db, generate_uuid4
-from ....typing import PartyID
-from ....util.instances import ReprBuilder
-
-from ...party.dbmodels.party import DbParty
-
-from ..models import Phase
+from byceps.database import db, generate_uuid4
+from byceps.services.bungalow_contest.models import Phase
+from byceps.services.party.dbmodels.party import DbParty
+from byceps.typing import PartyID
+from byceps.util.instances import ReprBuilder
 
 
 class DbContest(db.Model):

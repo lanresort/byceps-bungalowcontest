@@ -6,11 +6,10 @@ byceps.services.bungalow_contest.dbmodels.jury
 :License: Revised BSD (see `LICENSE` file for details)
 """
 
-from ....database import db
-from ....typing import UserID
-from ....util.instances import ReprBuilder
-
-from ..models import ContestID
+from byceps.database import db
+from byceps.services.bungalow_contest.models import ContestID
+from byceps.typing import UserID
+from byceps.util.instances import ReprBuilder
 
 from .contest import DbContest
 

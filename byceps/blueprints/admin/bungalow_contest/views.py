@@ -8,19 +8,27 @@ byceps.blueprints.admin.bungalow_contest.views
 
 from flask import abort
 
-from ....services.bungalow import bungalow_service
-from ....services.bungalow_contest.dbmodels import jury, rating  # Load models.
-from ....services.bungalow_contest import (
+from byceps.services.bungalow import bungalow_service
+from byceps.services.bungalow_contest import (
     bungalow_contest_aggregation_service,
     bungalow_contest_service,
 )
-from ....services.bungalow_contest.models import Phase
-from ....services.party import party_service
-from ....services.user import user_service
-from ....util.framework.blueprint import create_blueprint
-from ....util.framework.flash import flash_error, flash_success
-from ....util.framework.templating import templated
-from ....util.views import permission_required, redirect_to, respond_no_content
+from byceps.services.bungalow_contest.dbmodels import (
+    # Load models.
+    jury,  # noqa: F401
+    rating,  # noqa: F401
+)
+from byceps.services.bungalow_contest.models import Phase
+from byceps.services.party import party_service
+from byceps.services.user import user_service
+from byceps.util.framework.blueprint import create_blueprint
+from byceps.util.framework.flash import flash_error, flash_success
+from byceps.util.framework.templating import templated
+from byceps.util.views import (
+    permission_required,
+    redirect_to,
+    respond_no_content,
+)
 
 
 ATTRIBUTE_TITLES = [

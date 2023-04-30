@@ -10,7 +10,7 @@ from collections import defaultdict
 
 from .dbmodels.contest import DbContest
 from .dbmodels.rating import DbAttribute, DbRating
-from .models import AttributeID, AggregatedAttributeRating, ContestantID
+from .models import AggregatedAttributeRating, AttributeID, ContestantID
 
 
 def aggregate_ratings(

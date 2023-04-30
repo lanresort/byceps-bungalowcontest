@@ -12,15 +12,14 @@ from uuid import UUID
 
 from flask import current_app
 
-from ...database import db
-from ...util.image import create_thumbnail
-from ...util import upload as uploader
-from ...typing import PartyID
-
-from ..image import image_service
-from ..image.image_service import (
-    ImageTypeProhibited,  # noqa: F401
-)  # Provide to view functions.
+from byceps.database import db
+from byceps.services.image import image_service
+from byceps.services.image.image_service import (
+    ImageTypeProhibited,  # Provide to view functions.  # noqa: F401
+)
+from byceps.typing import PartyID
+from byceps.util import upload as uploader
+from byceps.util.image import create_thumbnail
 
 from .dbmodels.contestant import DbContestant, DbImage
 

@@ -10,12 +10,10 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from ....database import db, generate_uuid7
-from ....util.instances import ReprBuilder
-
-from ...bungalow.dbmodels.occupancy import DbBungalowOccupancy
-
-from ..models import ContestantID, ContestID
+from byceps.database import db, generate_uuid7
+from byceps.services.bungalow.dbmodels.occupancy import DbBungalowOccupancy
+from byceps.services.bungalow_contest.models import ContestantID, ContestID
+from byceps.util.instances import ReprBuilder
 
 from .contest import DbContest
 

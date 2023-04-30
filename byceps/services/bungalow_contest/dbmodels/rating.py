@@ -8,13 +8,11 @@ byceps.services.bungalow_contest.dbmodels.rating
 
 from datetime import datetime
 
-from ....database import db, generate_uuid7
-from ....typing import UserID
-from ....util.instances import ReprBuilder
-
-from ...user.dbmodels.user import DbUser
-
-from ..models import AttributeID, ContestantID
+from byceps.database import db, generate_uuid7
+from byceps.services.bungalow_contest.models import AttributeID, ContestantID
+from byceps.services.user.dbmodels.user import DbUser
+from byceps.typing import UserID
+from byceps.util.instances import ReprBuilder
 
 from .contest import DbContest
 from .contestant import DbContestant
