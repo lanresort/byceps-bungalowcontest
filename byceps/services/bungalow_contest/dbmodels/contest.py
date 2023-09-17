@@ -47,7 +47,6 @@ class DbContest(db.Model):
 
     @phase.setter
     def phase(self, phase: Phase) -> None:
-        assert phase is not None
         self._phase = phase.name
 
     def __repr__(self) -> str:
