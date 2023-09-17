@@ -14,11 +14,12 @@ if TYPE_CHECKING:
 else:
     from sqlalchemy.ext.hybrid import hybrid_property
 
-from byceps.database import db, generate_uuid4
+from byceps.database import db
 from byceps.services.bungalow_contest.models import Phase
 from byceps.services.party.dbmodels.party import DbParty
 from byceps.typing import PartyID
 from byceps.util.instances import ReprBuilder
+from byceps.util.uuid import generate_uuid4
 
 
 class DbContest(db.Model):

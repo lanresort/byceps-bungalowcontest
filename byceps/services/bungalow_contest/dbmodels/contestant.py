@@ -11,10 +11,11 @@ from __future__ import annotations
 from datetime import datetime
 from uuid import UUID
 
-from byceps.database import db, generate_uuid7
+from byceps.database import db
 from byceps.services.bungalow.dbmodels.occupancy import DbBungalowOccupancy
 from byceps.services.bungalow_contest.models import ContestantID, ContestID
 from byceps.util.instances import ReprBuilder
+from byceps.util.uuid import generate_uuid7
 
 from .contest import DbContest
 
