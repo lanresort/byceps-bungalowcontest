@@ -44,19 +44,25 @@
     </div>
   </div>
 
-  <p style="clear: both; margin: 2.5rem 0 1rem 0;">Hier wohnen {{ render_contestant_occupants(occupants) }}.</p>
+  <div class="main-body-box mt">
+
+    <p>Hier wohnen {{ render_contestant_occupants(occupants) }}.</p>
 
     {%- if contestant.description %}
-  <p>{{ render_icon('bungalow') }} {{ render_bungalow_link(bungalow) }} stellt sich vor:</p>
+    <p>{{ render_icon('bungalow') }} {{ render_bungalow_link(bungalow) }} stellt sich vor:</p>
 {{ render_contestant_description(contestant) }}
     {%- endif %}
 
+  </div>
+
   <h2>Bilder</h2>
+  <div class="main-body-box">
     {%- if contestant.images %}
 {{ render_contestant_images(contestant) }}
     {%- else %}
-  <p class="dimmed">Die Bewohner haben noch keine Bilder hochgeladen.</p>
+    <p class="dimmed">Die Bewohner haben noch keine Bilder hochgeladen.</p>
     {%- endif %}
+  </div>
 
   {%- endwith %}
 

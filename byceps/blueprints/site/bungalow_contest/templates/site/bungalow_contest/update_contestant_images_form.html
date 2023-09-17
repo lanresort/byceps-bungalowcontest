@@ -21,25 +21,29 @@
   <h1>{{ page_title }}</h1>
 
   <h2>Bilder</h2>
+  <div class="main-body-box">
     {%- if contestant.images %}
 {{ render_contestant_images(contestant) }}
     {%- else %}
-  <p class="dimmed">Du hast noch keine Bilder hochgeladen.</p>
+    <p class="dimmed">Du hast noch keine Bilder hochgeladen.</p>
     {%- endif %}
+  </div>
 
   <h2>Bild hochladen</h2>
-  <form action="{{ url_for('.create_contestant_image', id=contestant.id) }}" method="post" enctype="multipart/form-data">
-  {%- if not contestant.image_limit_reached %}
-    <small class="dimmed">
-      <p>Es können bis zu {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder hochgeladen werden.</p>
-    </small>
-    {{ form_field(form.image, maxlength=500000, accept='image/*') }}
-    {{ form_field(form.caption, maxlength=200, size=60, note='optional') }}
-  {%- else %}
-    <p>Es wurden bereits {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder für diesen Bungalow hochgeladen. Das muss genügen :)</p>
-  {%- endif %}
+  <div class="main-body-box">
+    <form action="{{ url_for('.create_contestant_image', id=contestant.id) }}" method="post" enctype="multipart/form-data">
+    {%- if not contestant.image_limit_reached %}
+      <small class="dimmed">
+        <p>Es können bis zu {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder hochgeladen werden.</p>
+      </small>
+      {{ form_field(form.image, maxlength=500000, accept='image/*') }}
+      {{ form_field(form.caption, maxlength=200, size=60, note='optional') }}
+    {%- else %}
+      <p>Es wurden bereits {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder für diesen Bungalow hochgeladen. Das muss genügen :)</p>
+    {%- endif %}
 
-    {{ form_buttons('%s Bild hochladen'|format(render_icon('upload'))|safe, cancel_url=contestant_view_url) }}
-  </form>
+      {{ form_buttons('%s Bild hochladen'|format(render_icon('upload'))|safe, cancel_url=contestant_view_url) }}
+    </form>
+  </div>
 
 {%- endblock %}
