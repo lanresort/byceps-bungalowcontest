@@ -15,7 +15,7 @@ from flask import current_app
 
 from byceps.database import db
 from byceps.services.image import image_service
-from byceps.typing import PartyID
+from byceps.services.party.models import PartyID
 from byceps.util import upload as uploader
 from byceps.util.image import create_thumbnail
 from byceps.util.result import Err, Ok, Result

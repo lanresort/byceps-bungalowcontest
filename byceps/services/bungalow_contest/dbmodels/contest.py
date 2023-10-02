@@ -16,8 +16,8 @@ else:
 
 from byceps.database import db
 from byceps.services.bungalow_contest.models import Phase
-from byceps.services.party.dbmodels.party import DbParty
-from byceps.typing import PartyID
+from byceps.services.party.dbmodels import DbParty
+from byceps.services.party.models import PartyID
 from byceps.util.instances import ReprBuilder
 from byceps.util.uuid import generate_uuid4
 

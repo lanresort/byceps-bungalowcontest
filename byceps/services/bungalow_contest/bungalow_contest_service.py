@@ -13,8 +13,9 @@ from uuid import UUID
 from sqlalchemy import select
 
 from byceps.database import db
+from byceps.services.party.models import PartyID
 from byceps.services.user.dbmodels.user import DbUser
-from byceps.typing import PartyID, UserID
+from byceps.services.user.models.user import UserID
 
 from .dbmodels.contest import DbContest
 from .dbmodels.contestant import DbContestant

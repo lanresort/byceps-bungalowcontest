@@ -8,7 +8,7 @@ byceps.services.bungalow_contest.dbmodels.jury
 
 from byceps.database import db
 from byceps.services.bungalow_contest.models import ContestID
-from byceps.typing import UserID
+from byceps.services.user.models.user import UserID
 from byceps.util.instances import ReprBuilder
 
 from .contest import DbContest
