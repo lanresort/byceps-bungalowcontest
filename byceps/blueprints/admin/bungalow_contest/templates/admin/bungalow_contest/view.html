@@ -9,23 +9,23 @@
 {% set page_title = 'Bungalow-Contest' %}
 
 {% block head %}
-  <style>
-    .tag.contest-notstarted {
-      background-color: #1199ff;
-    }
+<style>
+.tag.contest-notstarted {
+  background-color: #1199ff;
+}
 
-    .tag.contest-registration {
-      background-color: #55cc00;
-    }
+.tag.contest-registration {
+  background-color: #55cc00;
+}
 
-    .tag.contest-rating {
-      background-color: #ffcc11;
-    }
+.tag.contest-rating {
+  background-color: #ffcc11;
+}
 
-    .tag.contest-ended {
-      background-color: #999999;
-    }
-  </style>
+.tag.contest-ended {
+  background-color: #999999;
+}
+</style>
 {%- endblock %}
 
 {% macro render_phase(phase) %}
@@ -48,22 +48,18 @@
   {%- if contest is not none %}
 
   <div class="box">
-    <table class="index index--v-centered">
-      <tr>
-        <th>Phase</th>
-        <td>
-          <div class="dropdown">
-            <button class="dropdown-toggle button button--clear">{{ render_phase(contest.phase) }} {{ render_icon('caret-down') }}</button>
-            <ol class="dropdown-menu dropdown-menu--right">
-              <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.not_started.name) }}" data-action="switch-to-phase-not-started">{{ render_phase(Phase.not_started) }}</a></li>
-              <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.registration.name) }}" data-action="switch-to-phase-registration">{{ render_phase(Phase.registration) }}</a></li>
-              <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.rating.name) }}" data-action="switch-to-phase-rating">{{ render_phase(Phase.rating) }}</a></li>
-              <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.ended.name) }}" data-action="switch-to-phase-ended">{{ render_phase(Phase.ended) }}</a></li>
-            </ol>
-          </div>
-        </td>
-      </tr>
-    </table>
+    <div class="data-label">Phase</div>
+    <div class="data-value">
+      <div class="dropdown">
+        <button class="dropdown-toggle button button--clear">{{ render_phase(contest.phase) }} {{ render_icon('caret-down') }}</button>
+        <ol class="dropdown-menu dropdown-menu--right">
+          <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.not_started.name) }}" data-action="switch-to-phase-not-started">{{ render_phase(Phase.not_started) }}</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.registration.name) }}" data-action="switch-to-phase-registration">{{ render_phase(Phase.registration) }}</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.rating.name) }}" data-action="switch-to-phase-rating">{{ render_phase(Phase.rating) }}</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.ended.name) }}" data-action="switch-to-phase-ended">{{ render_phase(Phase.ended) }}</a></li>
+        </ol>
+      </div>
+    </div>
   </div>
 
   <h2>Jurymitglieder {{ render_extra_in_heading(jurors|length) }}</h2>
