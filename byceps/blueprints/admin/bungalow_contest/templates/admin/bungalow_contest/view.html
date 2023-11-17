@@ -106,35 +106,33 @@
   <small>
     <p><strong>{{ rating_users_total }}</strong> Benutzer haben an der Bewertung teilgenommen.</p>
   </small>
-  <div class="box">
-    <table class="index index--v-centered">
-      <thead>
-        <tr>
-          <th>Bungalow</th>
-          {%- for attribute in attributes_ordered %}
-          <th>{{ attribute.title }}</th>
-          {%- endfor %}
-        </tr>
-      </thead>
-      <tbody>
-      {%- for contestant in contest.contestants %}
+  <table class="itemlist itemlist--v-centered">
+    <thead>
       <tr>
-        <td class="bignumber">{{ contestant.bungalow_occupancy.bungalow.number }}</td>
-        {%- with aggregated_contestant_ratings = aggregated_ratings[contestant.id] %}
-          {%- for attribute in attributes_ordered %}
-        <td style="text-align: center;">
-            {%- with aggregated_attribute_rating = aggregated_contestant_ratings[attribute.id] %}
-          {{ '%.2f'|format(aggregated_attribute_rating.average_value) }}<br>
-          <small class="dimmed" style="white-space: nowrap;">{{ aggregated_attribute_rating.rating_count }} Stimme(n)</small>
-            {%- endwith %}
-        </td>
-          {%- endfor %}
-        {%- endwith %}
+        <th>Bungalow</th>
+        {%- for attribute in attributes_ordered %}
+        <th>{{ attribute.title }}</th>
+        {%- endfor %}
       </tr>
-      {%- endfor %}
-      </tbody>
-    </table>
-  </div>
+    </thead>
+    <tbody>
+    {%- for contestant in contest.contestants %}
+    <tr>
+      <td class="bignumber">{{ contestant.bungalow_occupancy.bungalow.number }}</td>
+      {%- with aggregated_contestant_ratings = aggregated_ratings[contestant.id] %}
+        {%- for attribute in attributes_ordered %}
+      <td style="text-align: center;">
+          {%- with aggregated_attribute_rating = aggregated_contestant_ratings[attribute.id] %}
+        {{ '%.2f'|format(aggregated_attribute_rating.average_value) }}<br>
+        <small class="dimmed" style="white-space: nowrap;">{{ aggregated_attribute_rating.rating_count }} Stimme(n)</small>
+          {%- endwith %}
+      </td>
+        {%- endfor %}
+      {%- endwith %}
+    </tr>
+    {%- endfor %}
+    </tbody>
+  </table>
     {%- else %}
   <div class="box">
     <div class="dimmed-box centered">Es liegen noch keine Bewertungen vor.</div>
