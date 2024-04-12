@@ -22,7 +22,7 @@
   bottom: 100%;
   content: " ";
   height: 0;
-  left: 30px;
+  left: 46px;
   pointer-events: none;
   position: absolute;
   width: 0;
@@ -36,8 +36,8 @@
 }
 
 .bungalow-contest-description:before {
-  border-color: rgba(221, 221, 221, 0);
-  border-bottom-color: #dddddd;
+  border-color: rgba(204, 204, 204, 0);
+  border-bottom-color: var(--border-color);
   border-width: 11px;
   margin-left: -11px;
 }
