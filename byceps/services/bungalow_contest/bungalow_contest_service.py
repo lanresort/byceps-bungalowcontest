@@ -102,7 +102,8 @@ def is_bungalow_contestant(bungalow_occupancy_id: UUID) -> bool:
         select(db.func.count(DbContestant.id)).filter_by(
             bungalow_occupancy_id=bungalow_occupancy_id
         )
-    )
+    ) or 0
+
     return count > 0
 
 
@@ -180,4 +181,4 @@ def get_rating_users_total(contest_id: ContestID) -> int:
         .join(DbContestant)
         .filter(DbContestant.contest_id == contest_id)
         .distinct()
-    )
+    ) or 0
