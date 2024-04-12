@@ -21,10 +21,10 @@
   <div class="main-body-box">
     <form action="{{ url_for('.update_contestant', id=contestant.id) }}" method="post">
     {% with %}
-      {% set note %}
+      {% set caption %}
       <a href="https://de.wikipedia.org/wiki/BBCode" target="_blank">BBCode</a> wird unterstützt.
       {% endset %}
-      {{ form_field(form.description, autofocus='autofocus', note=note) }}
+      {{ form_field(form.description, autofocus='autofocus', caption=caption) }}
     {% endwith %}
 
       {{ form_buttons('Speichern', cancel_url=contestant_view_url) }}
