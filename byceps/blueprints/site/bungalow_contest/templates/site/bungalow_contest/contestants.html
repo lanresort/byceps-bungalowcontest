@@ -16,14 +16,14 @@
       <li><a href="{{ url_for('.index') }}">Bungalow-Contest</a></li>
     </ol>
   </nav>
-  <h1>Kandidaten</h1>
+  <h1 class="title">Kandidaten</h1>
 
   <div class="main-body-box">
   {%- if contest.contestants %}
     {%- for contestant in contest.contestants|sort(attribute='bungalow_occupancy.bungalow.number') %}
       {%- with bungalow = contestant.bungalow_occupancy.bungalow %}
     <div class="bungalow-contest-candidate">
-      <h2>
+      <h2 class="title">
         {{ render_bungalow_avatar(bungalow, 24) }}
         <a href="{{ url_for('.view_contestant', id=contestant.id) }}">
           {{- bungalow.number }}{% if contestant.bungalow_occupancy.title %} – {{ contestant.bungalow_occupancy.title }}{% endif -%}

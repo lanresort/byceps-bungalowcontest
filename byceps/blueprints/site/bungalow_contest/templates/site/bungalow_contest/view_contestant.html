@@ -24,7 +24,7 @@
           <li><a href="{{ url_for('.contestants') }}">Kandidaten</a></li>
         </ol>
       </nav>
-      <h1>
+      <h1 class="title">
         {%- filter dim %}Bungalow {{ bungalow.number }}{% endfilter %}<br>
         {{- occupancy.title or '' -}}
       </h1>
@@ -55,7 +55,7 @@
 
   </div>
 
-  <h2>Bilder</h2>
+  <h2 class="title">Bilder</h2>
   <div class="main-body-box">
     {%- if contestant.images %}
 {{ render_contestant_images(contestant) }}

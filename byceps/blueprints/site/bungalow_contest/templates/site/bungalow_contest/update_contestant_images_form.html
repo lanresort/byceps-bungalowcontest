@@ -18,9 +18,9 @@
       <li><a href="{{ contestant_view_url }}">Bungalow {{ contestant.bungalow_occupancy.bungalow.number }}</a></li>
     </ol>
   </nav>
-  <h1>{{ page_title }}</h1>
+  <h1 class="title">{{ page_title }}</h1>
 
-  <h2>Bilder</h2>
+  <h2 class="title">Bilder</h2>
   <div class="main-body-box">
     {%- if contestant.images %}
 {{ render_contestant_images(contestant) }}
@@ -29,7 +29,7 @@
     {%- endif %}
   </div>
 
-  <h2>Bild hochladen</h2>
+  <h2 class="title">Bild hochladen</h2>
   <form action="{{ url_for('.create_contestant_image', id=contestant.id) }}" method="post" enctype="multipart/form-data">
     <div class="main-body-box">
       {%- if not contestant.image_limit_reached %}
