@@ -10,10 +10,9 @@
 {% endblock %}
 
 {% block body %}
-
   {%- with bungalow = occupancy.bungalow %}
 
-  <div class="row row--space-between">
+  <div class="block row row--space-between">
     <div>
 {{ render_bungalow_avatar(bungalow, 128) }}
     </div>
@@ -45,15 +44,13 @@
   </div>
 
   <div class="main-body-box mt">
-
     <p>Hier wohnen {{ render_contestant_occupants(occupants) }}.</p>
+  </div>
 
     {%- if contestant.description %}
-    <p>{{ render_icon('bungalow') }} {{ render_bungalow_link(bungalow) }} stellt sich vor:</p>
+  <p>{{ render_icon('bungalow') }} {{ render_bungalow_link(bungalow) }} stellt sich vor:</p>
 {{ render_contestant_description(contestant) }}
     {%- endif %}
-
-  </div>
 
   <h2 class="title">Bilder</h2>
   <div class="main-body-box">
@@ -65,5 +62,4 @@
   </div>
 
   {%- endwith %}
-
 {%- endblock %}

@@ -1,18 +1,5 @@
-.bungalow-contest-candidate {
-  border-top: #cccccc solid 1px;
-  margin-top: 2rem;
-}
-
-.bungalow-contest-candidate > div {
-  margin-left: 2rem;
-}
-
 .bungalow-contest-description {
-  border: #dddddd solid 1px;
-  border-radius: 3px;
   display: block;
-  margin: 1rem 0;
-  padding: 15px;
   position: relative;
 }
 

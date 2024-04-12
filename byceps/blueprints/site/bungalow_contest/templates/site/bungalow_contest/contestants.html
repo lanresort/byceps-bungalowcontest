@@ -18,11 +18,11 @@
   </nav>
   <h1 class="title">Kandidaten</h1>
 
-  <div class="main-body-box">
+  <ol class="itemlist">
   {%- if contest.contestants %}
     {%- for contestant in contest.contestants|sort(attribute='bungalow_occupancy.bungalow.number') %}
       {%- with bungalow = contestant.bungalow_occupancy.bungalow %}
-    <div class="bungalow-contest-candidate">
+    <li class="bungalow-contest-candidate">
       <h2 class="title">
         {{ render_bungalow_avatar(bungalow, 24) }}
         <a href="{{ url_for('.view_contestant', id=contestant.id) }}">
@@ -75,13 +75,15 @@
         {%- endif %}
 
       </div>
-    </div>
+    </li>
       {%- endwith %}
     {%- endfor %}
+  </ol>
   {%- else %}
+  <div class="box">
     <p class="dimmed">Es ist noch kein Bungalow angemeldet.</p>
-  {%- endif %}
   </div>
+  {%- endif %}
 
 {%- endblock %}
 
