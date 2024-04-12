@@ -34,8 +34,8 @@
         <div class="dropdown">
           <button class="dropdown-toggle button"><span>Aktionen</span> {{ render_icon('caret-down') }}</button>
           <ol class="dropdown-menu dropdown-menu--right">
-            <li><a class="dropdown-item" href="{{ url_for('.update_contestant_form', id=contestant.id) }}">{{ render_icon('edit') }} <span>Beschreibung bearbeiten</span></a></li>
-            <li><a class="dropdown-item" href="{{ url_for('.update_contestant_images_form', id=contestant.id) }}">{{ render_icon('edit') }} <span>Bilder verwalten</span></a></li>
+            <li><a class="dropdown-item" href="{{ url_for('.update_contestant_form', id=contestant.id) }}">Beschreibung bearbeiten</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('.update_contestant_images_form', id=contestant.id) }}">Bilder verwalten</a></li>
           </ol>
         </div>
       </div>
@@ -48,7 +48,7 @@
   </div>
 
     {%- if contestant.description %}
-  <p>{{ render_icon('bungalow') }} {{ render_bungalow_link(bungalow) }} stellt sich vor:</p>
+  <p>{{ render_bungalow_link(bungalow) }} stellt sich vor:</p>
 {{ render_contestant_description(contestant) }}
     {%- endif %}
 
