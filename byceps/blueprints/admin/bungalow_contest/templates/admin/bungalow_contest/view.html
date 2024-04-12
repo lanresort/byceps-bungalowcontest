@@ -62,66 +62,66 @@
     </div>
   </div>
 
-  <h2>Jurymitglieder {{ render_extra_in_heading(jurors|length) }}</h2>
-  <div class="box">
+  <h2 class="title">Jurymitglieder {{ render_extra_in_heading(jurors|length) }}</h2>
     {%- if jurors %}
-    <ul>
-      {%- for juror in jurors|sort(attribute='screen_name') %}
-      <li>{{ render_user_avatar_and_admin_link(juror, size=16) }}</li>
-      {%- endfor %}
-    </ul>
+  <ol class="itemlist">
+    {%- for juror in jurors|sort(attribute='screen_name') %}
+    <li>{{ render_user_avatar_and_admin_link(juror, size=32) }}</li>
+    {%- endfor %}
+  </ol>
     {%- else %}
+  <div class="box">
     <div class="dimmed-box centered">Es wurden noch keine Jurymitglieder ernannt.</div>
-    {%- endif %}
   </div>
+    {%- endif %}
 
-  <h2>Bewertungskategorien {{ render_extra_in_heading(contest.attributes|length) }}</h2>
-  <div class="box">
+  <h2 class="title">Bewertungskategorien {{ render_extra_in_heading(contest.attributes|length) }}</h2>
     {%- if contest.attributes %}
-    <ul>
-      {%- for category in contest.attributes|sort(attribute='title') %}
-      <li>{{ category.title }}</li>
-      {%- endfor %}
-    </ul>
+  <ol class="itemlist">
+    {%- for category in contest.attributes|sort(attribute='title') %}
+    <li>{{ category.title }}</li>
+    {%- endfor %}
+  </ol>
     {%- else %}
-    <div class="dimmed-box centered">Es sind keine Bewertungskategorien definiert.</div>
-    {%- endif %}
-  </div>
-
-  <h2>Kandidaten {{ render_extra_in_heading(contest.contestants|length) }}</h2>
   <div class="box">
-    {%- if contest.contestants %}
-    <ul>
-      {%- for contestant in contest.contestants|sort(attribute='bungalow_occupancy.bungalow.number') %}
-      <li>Bungalow {{ contestant.bungalow_occupancy.bungalow.number }}</li>
-      {%- endfor %}
-    </ul>
-    {%- else %}
-    <div class="dimmed-box centered">Es haben sich noch keine Bungalows angemeldet.</div>
-    {%- endif %}
+    <div class="dimmed-box centered">Es sind keine Bewertungskategorien definiert.</div>
   </div>
+    {%- endif %}
 
-  <h2>Bewertungen</h2>
+  <h2 class="title">Kandidaten {{ render_extra_in_heading(contest.contestants|length) }}</h2>
+    {%- if contest.contestants %}
+  <ol class="itemlist">
+    {%- for contestant in contest.contestants|sort(attribute='bungalow_occupancy.bungalow.number') %}
+    <li>Bungalow {{ contestant.bungalow_occupancy.bungalow.number }}</li>
+    {%- endfor %}
+  </ol>
+    {%- else %}
+  <div class="box">
+    <div class="dimmed-box centered">Es haben sich noch keine Bungalows angemeldet.</div>
+  </div>
+    {%- endif %}
+
+  <h2 class="title">Bewertungen</h2>
     {%- if aggregated_ratings %}
-  <small>
-    <p><strong>{{ rating_users_total }}</strong> Benutzer haben an der Bewertung teilgenommen.</p>
-  </small>
-  <table class="itemlist is-vcentered">
+  <div class="block">
+    <strong>{{ rating_users_total }}</strong> Benutzer haben an der Bewertung teilgenommen.
+  </div>
+  <table class="itemlist is-vcentered is-wide">
     <thead>
       <tr>
-        <th>Bungalow</th>
+        <th class="centered">Bungalow</th>
         {%- for attribute in attributes_ordered %}
-        <th>{{ attribute.title }}</th>
+        <th class="centered">{{ attribute.title }}</th>
         {%- endfor %}
       </tr>
     </thead>
     <tbody>
     {%- for contestant in contest.contestants %}
     <tr>
-      <td class="bignumber">{{ contestant.bungalow_occupancy.bungalow.number }}</td>
+      <td class="centered bignumber">{{ contestant.bungalow_occupancy.bungalow.number }}</td>
       {%- with aggregated_contestant_ratings = aggregated_ratings[contestant.id] %}
         {%- for attribute in attributes_ordered %}
-      <td style="text-align: center;">
+      <td class="centered">
           {%- with aggregated_attribute_rating = aggregated_contestant_ratings[attribute.id] %}
         {{ '%.2f'|format(aggregated_attribute_rating.average_value) }}<br>
         <small class="dimmed" style="white-space: nowrap;">{{ aggregated_attribute_rating.rating_count }} Stimme(n)</small>
