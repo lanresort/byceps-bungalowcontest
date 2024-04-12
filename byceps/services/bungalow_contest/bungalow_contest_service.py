@@ -98,13 +98,16 @@ def find_contestant_for_bungalow(
 
 def is_bungalow_contestant(bungalow_occupancy_id: UUID) -> bool:
     """Return `True` if the bungalow is registered for the contest."""
-    count = db.session.scalar(
-        select(db.func.count(DbContestant.id)).filter_by(
-            bungalow_occupancy_id=bungalow_occupancy_id
+    return (
+        db.session.scalar(
+            select(
+                select(DbContestant.id)
+                .filter_by(bungalow_occupancy_id=bungalow_occupancy_id)
+                .exists()
+            )
         )
-    ) or 0
-
-    return count > 0
+        or False
+    )
 
 
 def register_contestant(
