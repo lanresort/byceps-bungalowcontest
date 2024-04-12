@@ -8,56 +8,75 @@
 
   <h1>{{ page_title }}</h1>
 
-  <div class="main-body-box">
-
   {%- if contest.phase != Phase.not_started %}
+  <div class="main-body-box">
     <p><a href="{{ url_for('.contestants') }}">Kandidaten</a></p>
+  </div>
   {%- endif %}
 
   {%- if contest.phase == Phase.not_started %}
 
+  <div class="main-body-box">
     <p>Der Wettbewerb hat <strong>noch nicht begonnen</strong>.</p>
+  </div>
 
   {%- elif contest.phase == Phase.registration %}
 
     {%- if not g.user.authenticated %}
 
+  <div class="main-body-box">
     <p>Du musst <a href="{{ url_for('authn_login.log_in_form') }}">angemeldet</a> und Verwalter/in eines Bungalows sein um diesen zum Wettbewerb anmelden zu können.</p>
+  </div>
 
     {%- elif occupancy %}
 
       {%- if contestant %}
+
+  <div class="main-body-box">
     <p>Der von dir verwaltete Bungalow {{ occupancy.bungalow.number }} <strong>ist zum Wettbewerb angemeldet</a></strong> (<a href="{{ url_for('.view_contestant', id=contestant.id) }}">anzeigen</a>).</p>
+  </div>
+
       {%- else %}
+
+  <div class="main-body-box">
     <p>Du verwaltest Bungalow {{ occupancy.bungalow.number }} und kannst diesen <strong>jetzt zum Wettbewerb anmelden</strong>.</p>
-    <form action="{{ url_for('.register') }}" method="post">
-      {{ form_buttons('Bungalow {:d} anmelden'.format(occupancy.bungalow.number)) }}
-    </form>
+  </div>
+
+  <form action="{{ url_for('.register') }}" method="post">
+    {{ form_buttons('Bungalow {:d} anmelden'.format(occupancy.bungalow.number)) }}
+  </form>
+
       {%- endif %}
 
     {%- else %}
 
       {%- if inhabited_bungalow and contestant %}
+  <div class="main-body-box">
     <p>Der von dir bewohnte Bungalow {{ inhabited_bungalow.number }} <strong>ist bereits zum Wettbewerb angemeldet</a></strong> (<a href="{{ url_for('.view_contestant', id=contestant.id) }}">anzeigen</a>).</p>
+  </div>
       {%- endif %}
 
+  <div class="main-body-box">
     <p>Du musst Verwalter/in eines Bungalows sein um diesen zum Wettbewerb anmelden zu können.</p>
       {%- if inhabited_bungalow %}
     <p>Verwalter/in des von dir bewohnten Bungalow {{ inhabited_bungalow.number }} ist {{ render_user_link(inhabited_bungalow_manager) }}.</p>
       {%- endif %}
+  </div>
 
     {%- endif %}
 
   {%- elif contest.phase == Phase.rating %}
 
+  <div class="main-body-box">
     <p>Du kannst jetzt angemeldete <strong>Bungalows bewerten</strong>.</p>
+  </div>
 
   {%- elif contest.phase == Phase.ended %}
 
+  <div class="main-body-box">
     <p>Der Wettbewerb ist beendet.</p>
+  </div>
 
   {%- endif %}
-
-  </div>
 
 {%- endblock %}
