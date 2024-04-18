@@ -220,7 +220,12 @@ def create_contestant_image(id):
     if contestant.image_limit_reached:
         abort(409, 'Maximum number of allowed images reached.')
 
-    form = ImageCreateForm(request.form)
+    # Make `InputRequired` work on `FileField`.
+    form_fields = request.form.copy()
+    if request.files:
+        form_fields.update(request.files)
+
+    form = ImageCreateForm(form_fields)
 
     if not form.validate():
         return update_contestant_images_form(id, erroneous_form=form)
