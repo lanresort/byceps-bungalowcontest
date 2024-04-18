@@ -37,7 +37,7 @@
         <p>Es können bis zu {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder hochgeladen werden.</p>
       </small>
       {{ form_field(form.image, maxlength=500000, accept='image/*') }}
-      {{ form_field(form.caption, maxlength=200, size=60, note='optional') }}
+      {{ form_field(form.caption, maxlength=200, size=60, caption='optional') }}
       {%- else %}
       <p>Es wurden bereits {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder für diesen Bungalow hochgeladen. Das muss genügen :)</p>
       {%- endif %}
