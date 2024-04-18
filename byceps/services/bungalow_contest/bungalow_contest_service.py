@@ -180,11 +180,10 @@ def get_rating_users_total(contest_id: ContestID) -> int:
     """
     return (
         db.session.scalar(
-            select(db.func.count(DbUser.id))
+            select(db.func.count(DbUser.id.distinct()))
             .join(DbRating)
             .join(DbContestant)
             .filter(DbContestant.contest_id == contest_id)
-            .distinct()
         )
         or 0
     )
