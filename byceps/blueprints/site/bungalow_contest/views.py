@@ -44,6 +44,7 @@ from .forms import ContestantUpdateForm, ImageCreateForm
 ALLOWED_IMAGE_TYPES = frozenset(
     [
         ImageType.jpeg,
+        ImageType.png,
     ]
 )
 
