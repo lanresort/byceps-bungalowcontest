@@ -178,10 +178,13 @@ def get_rating_users_total(contest_id: ContestID) -> int:
     """Return the number of unique users that have rated bungalows in
     this contest.
     """
-    return db.session.scalar(
-        select(db.func.count(DbUser.id))
-        .join(DbRating)
-        .join(DbContestant)
-        .filter(DbContestant.contest_id == contest_id)
-        .distinct()
-    ) or 0
+    return (
+        db.session.scalar(
+            select(db.func.count(DbUser.id))
+            .join(DbRating)
+            .join(DbContestant)
+            .filter(DbContestant.contest_id == contest_id)
+            .distinct()
+        )
+        or 0
+    )
