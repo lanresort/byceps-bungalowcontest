@@ -223,7 +223,7 @@ def create_contestant_image(id):
     form = ImageCreateForm(request.form)
 
     if not form.validate():
-        return update_contestant_form(id, erroneous_form=form)
+        return update_contestant_images_form(id, erroneous_form=form)
 
     image = request.files.get('image')
     if not image or not image.filename:
