@@ -110,7 +110,7 @@
       </tr>
     </thead>
     <tbody>
-    {%- for contestant in contest.contestants %}
+    {%- for contestant in contest.contestants|sort(attribute='bungalow_occupancy.bungalow.number') %}
     <tr>
       <td class="centered bignumber">{{ contestant.bungalow_occupancy.bungalow.number }}</td>
       {%- with aggregated_contestant_ratings = aggregated_ratings[contestant.id] %}
