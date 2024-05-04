@@ -310,7 +310,9 @@ def rate():
     if not value:
         abort(400, 'Missing value.')
 
-    contestant = db.session.get(DbContestant, contestant_id)
+    contestant = bungalow_contest_service.find_contestant(
+        g.party_id, contestant_id
+    )
     if not contestant:
         abort(400, 'Unknown contestant ID.')
 
