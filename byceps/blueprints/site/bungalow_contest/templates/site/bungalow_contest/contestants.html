@@ -22,7 +22,8 @@
   {%- if contest.contestants %}
     {%- for contestant in contest.contestants|sort(attribute='bungalow_occupancy.bungalow.number') %}
       {%- with bungalow = contestant.bungalow_occupancy.bungalow %}
-    <li class="bungalow-contest-candidate">
+        {%- with inhabited = inhabited_bungalow_contestant_id == contestant.id %}
+        <li class="bungalow-contest-candidate{% if inhabited %} inhabited{% endif %}">
       <h2 class="title">
         {{ render_bungalow_avatar(bungalow, 24) }}
         <a href="{{ url_for('.view_contestant', id=contestant.id) }}">
@@ -55,7 +56,9 @@
                       id="{{ name }}-{{ loop.index }}"
                       name="{{ name }}"
                       value="{{ value }}"
-                      {{- ' checked' if (value == user_value) else '' }}>
+                      {{- ' checked' if (value == user_value) else '' }}
+                      {{- ' disabled' if inhabited else '' }}
+                      >
                   <label
                       data-rating-contestant-id="{{ contestant.id }}"
                       data-rating-attribute-id="{{ attribute.id }}"
@@ -76,6 +79,7 @@
 
       </div>
     </li>
+        {%- endwith %}
       {%- endwith %}
     {%- endfor %}
   </ol>
@@ -90,7 +94,7 @@
 {% block scripts %}
     <script>
       onDomReady(() => {
-        document.querySelectorAll('.rating')
+        document.querySelectorAll('.bungalow-contest-candidate:not(.inhabited) .rating')
           .forEach(function(ratingElem) {
             const successIndicator = ratingElem.querySelector('.success');
             ratingElem.querySelectorAll('label')

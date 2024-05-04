@@ -37,6 +37,7 @@ from byceps.util.framework.blueprint import create_blueprint
 from byceps.util.framework.flash import flash_error, flash_success
 from byceps.util.framework.templating import templated
 from byceps.util.image.models import Dimensions, ImageType
+from byceps.util.iterables import find
 from byceps.util.views import login_required, redirect_to, respond_no_content
 
 from .forms import ContestantUpdateForm, ImageCreateForm
@@ -262,20 +263,42 @@ def contestants():
     """List constestants."""
     contest = _get_contest_or_404()
 
+    contestants = contest.contestants
+
     user_ratings_by_contestant = {}
     if g.user.authenticated:
-        for contestant in contest.contestants:
+        for contestant in contestants:
             user_ratings_by_contestant[contestant.id] = (
                 bungalow_contest_service.get_ratings_by_user(
                     g.user.id, contestant.id
                 )
             )
 
+    inhabited_bungalow_contestant_id = _find_inhabited_bungalow_contestant_id(
+        contestants
+    )
+
     return {
         'contest': contest,
         'Phase': Phase,
         'user_ratings_by_contestant': user_ratings_by_contestant,
+        'inhabited_bungalow_contestant_id': inhabited_bungalow_contestant_id,
     }
+
+
+def _find_inhabited_bungalow_contestant_id(contestants):
+    bungalow = _get_inhabited_bungalow()
+    if not bungalow:
+        return None
+
+    contestant = find(
+        contestants,
+        lambda c: c.bungalow_occupancy.bungalow_id == bungalow.id,
+    )
+    if not contestant:
+        return None
+
+    return contestant.id
 
 
 @blueprint.put('/ratings')
@@ -303,6 +326,12 @@ def rate():
         abort(400, 'Missing attribute ID.')
 
     creator = g.user
+
+    inhabited_bungalow = _get_inhabited_bungalow()
+    if inhabited_bungalow and (
+        contestant.bungalow_occupancy.bungalow_id == inhabited_bungalow.id
+    ):
+        abort(400, 'Bungalow inhabitants must not rate their own bungalow.')
 
     value = json_data.get('value')
     if not value:
