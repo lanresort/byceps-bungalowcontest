@@ -267,10 +267,10 @@ def contestants():
     user_ratings_by_contestant = {}
     if g.user.authenticated:
         for contestant in contest.contestants:
-            user_ratings_by_contestant[
-                contestant.id
-            ] = bungalow_contest_service.get_ratings_by_user(
-                g.user.id, contestant.id
+            user_ratings_by_contestant[contestant.id] = (
+                bungalow_contest_service.get_ratings_by_user(
+                    g.user.id, contestant.id
+                )
             )
 
     return {
