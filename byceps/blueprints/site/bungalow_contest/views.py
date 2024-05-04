@@ -13,6 +13,7 @@ from byceps.services.bungalow import (
     bungalow_occupancy_service,
     bungalow_service,
 )
+from byceps.services.bungalow.dbmodels.bungalow import DbBungalow
 from byceps.services.bungalow.dbmodels.occupancy import DbBungalowOccupancy
 from byceps.services.bungalow_contest import (
     bungalow_contest_image_service,
@@ -64,10 +65,7 @@ def index():
     """
     contest = _get_contest_or_404()
 
-    inhabited_bungalow = bungalow_service.find_bungalow_inhabited_by_user(
-        g.user.id, g.party_id
-    )
-
+    inhabited_bungalow = _get_inhabited_bungalow()
     if inhabited_bungalow:
         inhabited_bungalow_manager_id = (
             inhabited_bungalow.occupancy.occupied_by_id
@@ -353,3 +351,9 @@ def _get_occupants(db_occupancy: DbBungalowOccupancy) -> list[User]:
     )
 
     return [slot.occupant for slot in occupant_slots if slot.occupant]
+
+
+def _get_inhabited_bungalow() -> DbBungalow | None:
+    return bungalow_service.find_bungalow_inhabited_by_user(
+        g.user.id, g.party_id
+    )
