@@ -51,7 +51,7 @@
     <div class="data-label">Phase</div>
     <div class="data-value">
       <div class="dropdown">
-        <button class="dropdown-toggle button button--clear">{{ render_phase(contest.phase) }} {{ render_icon('caret-down') }}</button>
+        <button class="dropdown-toggle button is-clear">{{ render_phase(contest.phase) }} {{ render_icon('caret-down') }}</button>
         <ol class="dropdown-menu dropdown-menu--right">
           <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.not_started.name) }}" data-action="switch-to-phase-not-started">{{ render_phase(Phase.not_started) }}</a></li>
           <li><a class="dropdown-item" href="{{ url_for('.switch_to_phase', contest_id=contest.id, phase_name=Phase.registration.name) }}" data-action="switch-to-phase-registration">{{ render_phase(Phase.registration) }}</a></li>
