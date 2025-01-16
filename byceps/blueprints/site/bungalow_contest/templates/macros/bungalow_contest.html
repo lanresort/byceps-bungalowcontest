@@ -13,7 +13,7 @@
     {%- for image in contestant.images %}
     <li>
       <figure class="framed">
-        <a href="{{ image.url_path }}" data-fslightbox><img src="{{ image.url_path }}"></a>
+        <a href="{{ image.url_path }}" data-fslightbox="contestant-{{ contestant.id }}"><img src="{{ image.url_path }}"></a>
         {%- if image.caption %}
         <figcaption class="hyphenate">{{ image.caption }}</figcaption>
         {%- endif %}
