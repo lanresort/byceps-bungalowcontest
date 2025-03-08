@@ -36,7 +36,8 @@ from byceps.signals import bungalow_contest as bungalow_contest_signals
 from byceps.util.framework.blueprint import create_blueprint
 from byceps.util.framework.flash import flash_error, flash_success
 from byceps.util.framework.templating import templated
-from byceps.util.image.models import Dimensions, ImageType
+from byceps.util.image.dimensions import Dimensions
+from byceps.util.image.image_type import ImageType
 from byceps.util.iterables import find
 from byceps.util.views import login_required, redirect_to, respond_no_content
 

@@ -14,10 +14,11 @@ from uuid import UUID
 from flask import current_app
 
 from byceps.database import db
-from byceps.services.image import image_service
 from byceps.services.party.models import PartyID
 from byceps.util import upload as uploader
-from byceps.util.image import create_thumbnail
+from byceps.util.image.dimensions import determine_dimensions
+from byceps.util.image.image_type import determine_image_type
+from byceps.util.image.thumbnail import create_thumbnail
 from byceps.util.result import Err, Ok, Result
 
 from .dbmodels.contestant import DbContestant, DbImage
@@ -32,14 +33,12 @@ def upload(
     caption: str | None = None,
 ) -> Result[None, str]:
     """Upload a contestant image."""
-    image_type_result = image_service.determine_image_type(
-        stream, allowed_types
-    )
+    image_type_result = determine_image_type(stream, allowed_types)
     if image_type_result.is_err():
         return Err(image_type_result.unwrap_err())
 
     type_ = image_type_result.unwrap()
-    dimensions = image_service.determine_dimensions(stream)
+    dimensions = determine_dimensions(stream)
 
     # Resize if too large.
     image_too_large = dimensions > maximum_dimensions
