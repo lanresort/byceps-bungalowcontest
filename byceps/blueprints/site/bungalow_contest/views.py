@@ -18,6 +18,7 @@ from byceps.services.bungalow.dbmodels.occupancy import DbBungalowOccupancy
 from byceps.services.bungalow_contest import (
     bungalow_contest_image_service,
     bungalow_contest_service,
+    signals as bungalow_contest_signals,
 )
 from byceps.services.bungalow_contest.dbmodels import (
     # Load models.
@@ -32,7 +33,6 @@ from byceps.services.bungalow_contest.dbmodels.rating import DbAttribute
 from byceps.services.bungalow_contest.models import ContestantID, Phase
 from byceps.services.user import user_service
 from byceps.services.user.models.user import User
-from byceps.signals import bungalow_contest as bungalow_contest_signals
 from byceps.util.framework.blueprint import create_blueprint
 from byceps.util.framework.flash import flash_error, flash_success
 from byceps.util.framework.templating import templated
