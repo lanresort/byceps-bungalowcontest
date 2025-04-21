@@ -81,5 +81,5 @@ def delete(image_id: UUID) -> None:
 
 def _get_images_path(party_id: PartyID) -> Path:
     """Return the file system path for contest images."""
-    path_data = current_app.config['PATH_DATA']
+    path_data = current_app.byceps_config.data_path
     return path_data / 'parties' / party_id / 'bungalow-contest'
