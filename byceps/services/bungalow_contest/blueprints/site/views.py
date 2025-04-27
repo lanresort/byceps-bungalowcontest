@@ -79,7 +79,7 @@ def index():
         inhabited_bungalow_manager = None
 
     occupancy = bungalow_occupancy_service.find_occupancy_managed_by_user(
-        g.party_id, g.user.id
+        g.party.id, g.user.id
     )
 
     contestant = None
@@ -121,7 +121,7 @@ def register():
     contest = _get_contest_or_404()
 
     occupancy = bungalow_occupancy_service.find_occupancy_managed_by_user(
-        g.party_id, g.user.id
+        g.party.id, g.user.id
     )
 
     if (occupancy is None) or occupancy.manager_id != g.user.id:
@@ -317,7 +317,7 @@ def rate():
         abort(400, 'Missing contestant ID.')
 
     contestant = bungalow_contest_service.find_contestant(
-        g.party_id, contestant_id
+        g.party.id, contestant_id
     )
     if contestant is None:
         abort(400, 'Unknown contestant ID.')
@@ -339,7 +339,7 @@ def rate():
         abort(400, 'Missing value.')
 
     contestant = bungalow_contest_service.find_contestant(
-        g.party_id, contestant_id
+        g.party.id, contestant_id
     )
     if not contestant:
         abort(400, 'Unknown contestant ID.')
@@ -354,7 +354,7 @@ def rate():
 
 
 def _get_contest_or_404() -> DbContest:
-    contest = bungalow_contest_service.find_contest_by_party_id(g.party_id)
+    contest = bungalow_contest_service.find_contest_by_party_id(g.party.id)
 
     if contest is None:
         abort(404)
@@ -364,7 +364,7 @@ def _get_contest_or_404() -> DbContest:
 
 def _get_contestant_or_404(contestant_id: ContestantID) -> DbContestant:
     contestant = bungalow_contest_service.find_contestant(
-        g.party_id, contestant_id
+        g.party.id, contestant_id
     )
 
     if contestant is None:
@@ -385,5 +385,5 @@ def _get_occupants(db_occupancy: DbBungalowOccupancy) -> list[User]:
 
 def _get_inhabited_bungalow() -> DbBungalow | None:
     return bungalow_service.find_bungalow_inhabited_by_user(
-        g.user.id, g.party_id
+        g.user.id, g.party.id
     )
