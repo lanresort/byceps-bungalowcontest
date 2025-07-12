@@ -33,10 +33,11 @@ def _process_contestant_ratings(
     for attr in attributes:
         values = values_by_attr_id[attr.id]
         rating_count = len(values)
-        avg_value = sum(values) / rating_count if rating_count != 0 else 0.0
+        average_value = sum(values) / rating_count if rating_count != 0 else 0.0
 
         aggregated_attr_ratings[attr.id] = AggregatedAttributeRating(
-            avg_value, rating_count
+            average_value=average_value,
+            rating_count=rating_count,
         )
 
     return aggregated_attr_ratings

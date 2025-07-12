@@ -32,7 +32,7 @@ Phase = Enum(
 )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, kw_only=True)
 class AggregatedAttributeRating:
     average_value: float
     rating_count: int
