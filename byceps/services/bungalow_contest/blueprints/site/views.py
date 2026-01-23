@@ -32,7 +32,7 @@ from byceps.services.bungalow_contest.dbmodels.contestant import (
 from byceps.services.bungalow_contest.dbmodels.rating import DbAttribute
 from byceps.services.bungalow_contest.models import ContestantID, Phase
 from byceps.services.user import user_service
-from byceps.services.user.models.user import User
+from byceps.services.user.models import User
 from byceps.util.framework.blueprint import create_blueprint
 from byceps.util.framework.flash import flash_error, flash_success
 from byceps.util.framework.templating import templated
