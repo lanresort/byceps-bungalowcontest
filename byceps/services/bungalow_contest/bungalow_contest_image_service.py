@@ -11,8 +11,7 @@ from __future__ import annotations
 from pathlib import Path
 from uuid import UUID
 
-from flask import current_app
-
+from byceps.byceps_app import get_current_byceps_app
 from byceps.database import db
 from byceps.services.party.models import PartyID
 from byceps.util import upload as uploader
@@ -81,5 +80,5 @@ def delete(image_id: UUID) -> None:
 
 def _get_images_path(party_id: PartyID) -> Path:
     """Return the file system path for contest images."""
-    path_data = current_app.byceps_config.data_path
+    path_data = get_current_byceps_app().byceps_config.data_path
     return path_data / 'parties' / party_id / 'bungalow-contest'
