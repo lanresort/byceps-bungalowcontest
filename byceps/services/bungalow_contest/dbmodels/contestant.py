@@ -15,7 +15,6 @@ from byceps.database import db
 from byceps.services.bungalow.dbmodels.occupancy import DbBungalowOccupancy
 from byceps.services.bungalow_contest.models import ContestantID, ContestID
 from byceps.util.instances import ReprBuilder
-from byceps.util.uuid import generate_uuid7
 
 from .contest import DbContest
 
@@ -28,7 +27,7 @@ class DbContestant(db.Model):
 
     __tablename__ = 'bungalow_contest_contestants'
 
-    id = db.Column(db.Uuid, default=generate_uuid7, primary_key=True)
+    id = db.Column(db.Uuid, primary_key=True)
     contest_id = db.Column(
         db.Uuid,
         db.ForeignKey('bungalow_contests.id'),
@@ -49,10 +48,12 @@ class DbContestant(db.Model):
 
     def __init__(
         self,
+        contestant_id: ContestantID,
         contest_id: ContestID,
         bungalow_occupancy_id: UUID,
         description: str,
     ) -> None:
+        self.id = contestant_id
         self.contest_id = contest_id
         self.bungalow_occupancy_id = bungalow_occupancy_id
         self.description = description
@@ -78,7 +79,7 @@ class DbImage(db.Model):
 
     __tablename__ = 'bungalow_contest_images'
 
-    id = db.Column(db.Uuid, default=generate_uuid7, primary_key=True)
+    id = db.Column(db.Uuid, primary_key=True)
     contestant_id = db.Column(
         db.Uuid,
         db.ForeignKey('bungalow_contest_contestants.id'),
@@ -90,8 +91,13 @@ class DbImage(db.Model):
     caption = db.Column(db.UnicodeText, nullable=True)
 
     def __init__(
-        self, contestant_id: ContestantID, *, caption: str | None = None
+        self,
+        image_id: UUID,
+        contestant_id: ContestantID,
+        *,
+        caption: str | None = None,
     ) -> None:
+        self.id = image_id
         self.contestant_id = contestant_id
         self.caption = caption
 

@@ -7,13 +7,13 @@ byceps.services.bungalow_contest.dbmodels.rating
 """
 
 from datetime import datetime
+from uuid import UUID
 
 from byceps.database import db
 from byceps.services.bungalow_contest.models import AttributeID, ContestantID
 from byceps.services.user.dbmodels import DbUser
 from byceps.services.user.models import UserID
 from byceps.util.instances import ReprBuilder
-from byceps.util.uuid import generate_uuid7
 
 from .contest import DbContest
 from .contestant import DbContestant
@@ -24,7 +24,7 @@ class DbAttribute(db.Model):
 
     __tablename__ = 'bungalow_contest_attributes'
 
-    id = db.Column(db.Uuid, default=generate_uuid7, primary_key=True)
+    id = db.Column(db.Uuid, primary_key=True)
     contest_id = db.Column(
         db.Uuid,
         db.ForeignKey('bungalow_contests.id'),
@@ -34,7 +34,10 @@ class DbAttribute(db.Model):
     contest = db.relationship(DbContest, backref='attributes')
     title = db.Column(db.UnicodeText, nullable=False)
 
-    def __init__(self, contest: DbContest, title: str) -> None:
+    def __init__(
+        self, attribute_id: AttributeID, contest: DbContest, title: str
+    ) -> None:
+        self.id = attribute_id
         self.contest = contest
         self.title = title
 
@@ -55,7 +58,7 @@ class DbRating(db.Model):
         db.UniqueConstraint('contestant_id', 'attribute_id', 'creator_id'),
     )
 
-    id = db.Column(db.Uuid, default=generate_uuid7, primary_key=True)
+    id = db.Column(db.Uuid, primary_key=True)
     contestant_id = db.Column(
         db.Uuid,
         db.ForeignKey('bungalow_contest_contestants.id'),
@@ -77,11 +80,13 @@ class DbRating(db.Model):
 
     def __init__(
         self,
+        rating_id: UUID,
         contestant_id: ContestantID,
         attribute_id: AttributeID,
         creator_id: UserID,
         value: int,
     ) -> None:
+        self.id = rating_id
         self.contestant_id = contestant_id
         self.attribute_id = attribute_id
         self.creator_id = creator_id

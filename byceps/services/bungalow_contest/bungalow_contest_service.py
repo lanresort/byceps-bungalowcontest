@@ -16,6 +16,7 @@ from byceps.database import db
 from byceps.services.party.models import PartyID
 from byceps.services.user.dbmodels import DbUser
 from byceps.services.user.models import UserID
+from byceps.util.uuid import generate_uuid4, generate_uuid7
 
 from .dbmodels.contest import DbContest
 from .dbmodels.contestant import DbContestant
@@ -30,11 +31,14 @@ from .models import AttributeID, ContestantID, ContestID, Phase
 
 def create_contest(party_id: PartyID, attribute_titles: set[str]) -> ContestID:
     """Create a contest for that party."""
-    db_contest = DbContest(party_id)
+    contest_id = ContestID(generate_uuid4())
+
+    db_contest = DbContest(contest_id, party_id)
     db.session.add(db_contest)
 
     for title in attribute_titles:
-        db_attribute = DbAttribute(db_contest, title)
+        attribute_id = AttributeID(generate_uuid7())
+        db_attribute = DbAttribute(attribute_id, db_contest, title)
         db.session.add(db_attribute)
 
     db.session.commit()
@@ -114,7 +118,11 @@ def register_contestant(
     contest_id: ContestID, bungalow_occupancy_id: UUID, description: str
 ) -> DbContestant:
     """Register a bungalow as a contestant for a party."""
-    db_contestant = DbContestant(contest_id, bungalow_occupancy_id, description)
+    contestant_id = ContestantID(generate_uuid7())
+
+    db_contestant = DbContestant(
+        contestant_id, contest_id, bungalow_occupancy_id, description
+    )
 
     db.session.add(db_contestant)
     db.session.commit()
@@ -155,7 +163,10 @@ def rate(
     if db_rating:
         db_rating.value = value
     else:
-        db_rating = DbRating(contestant_id, attribute_id, creator_id, value)
+        rating_id = generate_uuid7()
+        db_rating = DbRating(
+            rating_id, contestant_id, attribute_id, creator_id, value
+        )
         db.session.add(db_rating)
 
     db.session.commit()

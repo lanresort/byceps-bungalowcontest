@@ -19,6 +19,7 @@ from byceps.util.image.dimensions import determine_dimensions
 from byceps.util.image.image_type import determine_image_type
 from byceps.util.image.thumbnail import create_thumbnail
 from byceps.util.result import Err, Ok, Result
+from byceps.util.uuid import generate_uuid7
 
 from .dbmodels.contestant import DbContestant, DbImage
 
@@ -32,6 +33,8 @@ def upload(
     caption: str | None = None,
 ) -> Result[None, str]:
     """Upload a contestant image."""
+    image_id = generate_uuid7()
+
     image_type_result = determine_image_type(stream, allowed_types)
     if image_type_result.is_err():
         return Err(image_type_result.unwrap_err())
@@ -44,7 +47,7 @@ def upload(
     if image_too_large:
         stream = create_thumbnail(stream, type_.name, maximum_dimensions)
 
-    db_image = DbImage(contestant.id, caption=caption)
+    db_image = DbImage(image_id, contestant.id, caption=caption)
     db.session.add(db_image)
     db.session.commit()
 

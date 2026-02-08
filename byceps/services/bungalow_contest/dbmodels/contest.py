@@ -15,11 +15,10 @@ else:
     from sqlalchemy.ext.hybrid import hybrid_property
 
 from byceps.database import db
-from byceps.services.bungalow_contest.models import Phase
+from byceps.services.bungalow_contest.models import ContestID, Phase
 from byceps.services.party.dbmodels import DbParty
 from byceps.services.party.models import PartyID
 from byceps.util.instances import ReprBuilder
-from byceps.util.uuid import generate_uuid4
 
 
 class DbContest(db.Model):
@@ -27,7 +26,7 @@ class DbContest(db.Model):
 
     __tablename__ = 'bungalow_contests'
 
-    id = db.Column(db.Uuid, default=generate_uuid4, primary_key=True)
+    id = db.Column(db.Uuid, primary_key=True)
     party_id = db.Column(
         db.UnicodeText,
         db.ForeignKey('parties.id'),
@@ -38,7 +37,8 @@ class DbContest(db.Model):
     party = db.relationship(DbParty)
     _phase = db.Column('phase', db.UnicodeText, nullable=False)
 
-    def __init__(self, party_id: PartyID) -> None:
+    def __init__(self, contest_id: ContestID, party_id: PartyID) -> None:
+        self.id = contest_id
         self.party_id = party_id
         self._phase = Phase.not_started.name
 
