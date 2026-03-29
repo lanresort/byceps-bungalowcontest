@@ -67,12 +67,12 @@
 }
 
 .rating:not(:checked) > label {
-  color: #aaaaaa;
+  color: #eeeeee;
   float: right;
   font-size: 1.5rem;
   margin-top: -0.6rem;
   overflow: hidden;
-  text-shadow: 1px 1px 1px #999999;
+  text-shadow: 0 0 1px #cccccc;
   white-space: nowrap;
   width: 1.5rem;
 }
