@@ -81,6 +81,10 @@
   cursor: pointer;
 }
 
+.bungalow-contest-candidate.inhabited .rating:not(:checked) > label {
+  cursor: not-allowed;
+}
+
 .rating:not(:checked) > label:before {
   content: '★ ';
 }
