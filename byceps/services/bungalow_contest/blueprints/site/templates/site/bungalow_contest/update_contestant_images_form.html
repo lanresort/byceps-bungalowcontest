@@ -31,7 +31,10 @@
 
   <h2 class="title">Bild hochladen</h2>
   {%- if not contestant.image_limit_reached %}
-  <div class="block">Es können bis zu {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder hochgeladen werden.</div>
+  <div class="block">
+    <p>Es können bis zu {{ MAXIMUM_UPLOADED_IMAGES_PER_CONTESTANT }} Bilder hochgeladen werden.</p>
+    <p><strong>Achtung:</strong> Bilder können nicht bearbeitet und nicht gelöscht werden.</p>
+  </div>
   <form action="{{ url_for('.create_contestant_image', id=contestant.id) }}" method="post" enctype="multipart/form-data">
     <div class="main-body-box">
       {{ form_field(form.image, maxlength=500000, accept='image/*') }}
