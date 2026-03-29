@@ -326,7 +326,7 @@ def rate():
     if not attribute_id:
         abort(400, 'Missing attribute ID.')
 
-    creator = g.user
+    creator = g.user.as_user()
 
     inhabited_bungalow = _get_inhabited_bungalow()
     if inhabited_bungalow and (
